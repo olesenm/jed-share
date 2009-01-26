@@ -1,5 +1,5 @@
 % User Initialization file for the JED editor  -*- SLang -*-
-% _traceback	= 0;	% Non zero means dump traceback on S-Lang errors
+% _traceback    = 0;    % Non zero means dump traceback on S-Lang errors
 
 #ifdef UNIX
 $1 = dircat (getenv ("HOME"), ".jedrc.sl");

@@ -3,7 +3,7 @@
 
 %{{{ common variables
 enable_top_status_line (0);
-HORIZONTAL_PAN	= -1;		% pan whole window
+HORIZONTAL_PAN  = -1;           % pan whole window
 %}}}
 %{{{ MSDOS OS2
 #ifdef MSDOS OS2
@@ -19,7 +19,7 @@ set_color_scheme ("White-on-Black");
 x_set_window_name (strcat ("XJed - ", getenv ("USER")));
 %}}}
 %{{{ non-XWINDOWS, colors & mouse
-#else	% XWINDOWS
+#else   % XWINDOWS
 #if$TERM xterm?color linux
 set_color_scheme ("White-on-Black");
 #elif$COLORTERM rxvt conex xterm*
@@ -29,7 +29,7 @@ set_color_scheme ("Gray-on-Black");
 #elif$JED_COLORS
 set_color_scheme (getenv ("JED_COLORS"));
 #endif
-#endif	% XWINDOWS
+#endif  % XWINDOWS
 %}}}
 %{{{ mail settings
 #ifn$USER olesen
@@ -41,21 +41,21 @@ $1 = "me.queensu.ca,olesen";
 variable Rmail_Dont_Reply_To =
 strncat ("olesen@conn.", $1, "@weber.", $1, _stkdepth () - $0);
 
-define mail_hook ()		% define a convenient mail hook
+define mail_hook ()             % define a convenient mail hook
 {
-   local_setkey ("mail_send", "^C^C");	% send and exit buffer
+   local_setkey ("mail_send", "^C^C");  % send and exit buffer
    local_setkey ("mailalias_expand", "^C^E");
    % set_buffer_modified_flag (0);
 }
 
-%define rmail_hook ()	{}
-%define rmail_folder_hook ()	{}
-setkey ("rmail",	"^X^M");
+%define rmail_hook ()   {}
+%define rmail_folder_hook ()    {}
+setkey ("rmail",        "^X^M");
 
 %}}}
 %{{{ man page
-.(unix_man)man		% quick and easy way to get man-pages
-.()clean_manpage	% forward reference
+.(unix_man)man          % quick and easy way to get man-pages
+.()clean_manpage        % forward reference
 
 %!% retrieve a man page entry and use clean_manpage to clean it up
 define conn_man ()
@@ -80,7 +80,7 @@ define conn_man ()
 }
 add_completion ("conn_man");
 %}}}
-#endif	% MSDOS/UNIX
+#endif  % MSDOS/UNIX
 
 %{{{ local_setup()
 % if the file "jed.sl" exists in the current directory, evaluate it
@@ -139,20 +139,20 @@ define dired_hook ()
    local_setkey (".1 dired_point", "\t");
    local_setkey ("dired_find", "\r");
 }
-%define dired_mode_hook ()	{}
-%define text_mode_hook ()	{}
-%define fortran_hook ()		{}
-%define tex_mode_hook ()	{}
+%define dired_mode_hook ()      {}
+%define text_mode_hook ()       {}
+%define fortran_hook ()         {}
+%define tex_mode_hook ()        {}
 
 define c_mode_hook ()
 {
 %%   CASE_SEARCH = 1;
 %    % local_setkey ("c_comment_region", "^X;");
    local_setkey ("compile", "^C^C");
-   local_setkey ("c_mark_function", "\eH");	% instead of ESC Ctrl-H
+   local_setkey ("c_mark_function", "\eH");     % instead of ESC Ctrl-H
 
-   local_setkey ("insert_fold_beg",	"\e{");
-   local_setkey ("insert_fold_end",	"\e}");
+   local_setkey ("insert_fold_beg",     "\e{");
+   local_setkey ("insert_fold_end",     "\e}");
 
    % some more keywords
 #iffalse
@@ -168,9 +168,9 @@ define c_mode_hook ()
 
 define slang_mode_hook ()
 {
-   local_setkey ("evalbuffer",		"^C^C");
-   local_setkey ("insert_fold_beg",	"\e{");
-   local_setkey ("insert_fold_end",	"\e}");
+   local_setkey ("evalbuffer",          "^C^C");
+   local_setkey ("insert_fold_beg",     "\e{");
+   local_setkey ("insert_fold_end",     "\e}");
 
    % some more keywords
    () = add_keywords ("SLANG", "BATCH", 5, 1);
@@ -182,7 +182,7 @@ define slang_mode_hook ()
 %-------------------------------------------------------------------------
 % additional functions
 %{{{ folding
-autoload ("fold_get_marks",	"folding");
+autoload ("fold_get_marks",     "folding");
 define insert_fold_beg ()
 {
    variable s1, s2;
@@ -224,7 +224,7 @@ define toggle_backup ()
 }
 add_completion ("toggle_backup");
 %}}}
-define libref ()	%{{{
+define libref ()        %{{{
 {
    variable file = "/usr/local/info/", buf = "libref.doc";
 #ifdef MSDOS OS2
@@ -234,18 +234,18 @@ define libref ()	%{{{
 
    if (bufferp (buf))
      {
-	pop2buf (buf);
+        pop2buf (buf);
      }
-   else	if (find_file (file))
+   else if (find_file (file))
      {
-	getbuf_info ();		% mark unchanged, no backup, no undo, etc.
-	() | 0x108;
-	() & ~(0x23);
-	setbuf_info (());
+        getbuf_info ();         % mark unchanged, no backup, no undo, etc.
+        () | 0x108;
+        () & ~(0x23);
+        setbuf_info (());
      }
    else
      {
-	delbuf (whatbuf ());	% not found
+        delbuf (whatbuf ());    % not found
      }
 }
 add_completion ("libref");
@@ -266,35 +266,35 @@ setkey ("vi_percent", "%");
 %-------------------------------------------------------------------------
 %{{{ more autoload/setkey
 
-autoload ("fopen",	"fopen");
+autoload ("fopen",      "fopen");
 
-setkey ("enlarge_window",	"^^");
-setkey ("backward_paragraph",	"\e^P");
-setkey ("forward_paragraph",	"\e^N");
-setkey ("query_replace_match",	"^X%");	% vaguely like the "\e%" binding
+setkey ("enlarge_window",       "^^");
+setkey ("backward_paragraph",   "\e^P");
+setkey ("forward_paragraph",    "\e^N");
+setkey ("query_replace_match",  "^X%"); % vaguely like the "\e%" binding
 
 _autoload ("c_box", "cbox",
-	   "c_un_comment", "cbox",
-	   "c_eof", "cbox",
-	   3);
-setkey (".'-'c_box",	"^C-");
-setkey ("c_un_comment",	"\e:");
+           "c_un_comment", "cbox",
+           "c_eof", "cbox",
+           3);
+setkey (".'-'c_box",    "^C-");
+setkey ("c_un_comment", "\e:");
 
-_autoload ("indent_region",	"align",
-	   "back_to_indentation","align",
-	   "move_to_tab",	"align",
-	   "tab_to_tab_stop1",	"align",
-	   "just_one_space",	"align",
-	   5);
+_autoload ("indent_region",     "align",
+           "back_to_indentation","align",
+           "move_to_tab",       "align",
+           "tab_to_tab_stop1",  "align",
+           "just_one_space",    "align",
+           5);
 
-setkey ("indent_region",	"\e^\\");	% C-M-\
-setkey ("back_to_indentation",	"\em");		% M-m
-setkey ("move_to_tab",		"\e\t");	% M-TAB
-setkey ("tab_to_tab_stop1",	"\ei");		% M-i
-setkey ("just_one_space",	"\e\040");	% M-SPACE
+setkey ("indent_region",        "\e^\\");       % C-M-\
+setkey ("back_to_indentation",  "\em");         % M-m
+setkey ("move_to_tab",          "\e\t");        % M-TAB
+setkey ("tab_to_tab_stop1",     "\ei");         % M-i
+setkey ("just_one_space",       "\e\040");      % M-SPACE
 
-% autoload ("compile_previous_error",	"compile");
-% setkey ("compile_previous_error",	"^X`");
+% autoload ("compile_previous_error",   "compile");
+% setkey ("compile_previous_error",     "^X`");
 
 autoload ("keycode",  "keycode");
 
@@ -323,7 +323,7 @@ define toggle_compiler ()
 }
 add_completion ("toggle_compiler");
 %}}}
-#endif	% AIX
+#endif  % AIX
 
 %{{{ search_across_buffer_files ()
 %
@@ -344,40 +344,40 @@ define search_across_buffer_files ()
    !if (strlen (str)) return;
    save_search_string (str);
 
-   push_spot ();		% save our location
+   push_spot ();                % save our location
    ERROR_BLOCK
      {
-	sw2buf (cbuf);
-	pop_spot ();
-	loop (n) pop ();	% remove buffers from stack
+        sw2buf (cbuf);
+        pop_spot ();
+        loop (n) pop ();        % remove buffers from stack
      }
 
    while (n)
      {
-	buf = ();  n--;
+        buf = ();  n--;
 
-	% skip special buffers
-	if ((buf[0] == '*') or (buf[0] == ' ')) continue;
+        % skip special buffers
+        if ((buf[0] == '*') or (buf[0] == ' ')) continue;
 
-	sw2buf (buf);
+        sw2buf (buf);
 
-	(file,,,flags) = getbuf_info ();
+        (file,,,flags) = getbuf_info ();
 
-	% skip if no file associated with buffer, or is read only
-	!if (strlen (file) or (flags & 8)) continue;
+        % skip if no file associated with buffer, or is read only
+        !if (strlen (file) or (flags & 8)) continue;
 
-	% ok, this buffer is what we want.
+        % ok, this buffer is what we want.
 
-	push_spot ();
-	ERROR_BLOCK
-	  {
-	     pop_spot ();
-	  }
+        push_spot ();
+        ERROR_BLOCK
+          {
+             pop_spot ();
+          }
 
-	bob ();
+        bob ();
 
-	() = search_maybe_again (&search_across_lines, str, 1);
-	pop_spot ();
+        () = search_maybe_again (&search_across_lines, str, 1);
+        pop_spot ();
      }
 
    EXECUTE_ERROR_BLOCK;
@@ -386,10 +386,10 @@ define search_across_buffer_files ()
 add_completion ("search_across_buffer_files");
 %}}}
 
-define duplicate_line()		%{{{
+define duplicate_line()         %{{{
 {
    push_spot ();
-   line_as_string ();		% on stack
+   line_as_string ();           % on stack
    newline ();
    insert (());
    pop_spot ();
@@ -408,13 +408,13 @@ define exit_hook ()
 
    if (strlen(f))
      {
-	() = delete_file (Jed_State_File);
-# ifdef MSDOS OS2		% fix backslash char used for pathname
-	f = str_quote_string (f, "\\", '\\');
+        () = delete_file (Jed_State_File);
+# ifdef MSDOS OS2               % fix backslash char used for pathname
+        f = str_quote_string (f, "\\", '\\');
 # endif
-	f = Sprintf ("()=find_file(\"%s\");goto_line(%d);goto_column(%d)"
-		     f, what_line (), what_column (), 3);
-	() = write_string_to_file (f, Jed_State_File);
+        f = Sprintf ("()=find_file(\"%s\");goto_line(%d);goto_column(%d)"
+                     f, what_line (), what_column (), 3);
+        () = write_string_to_file (f, Jed_State_File);
      }
    exit_jed();
 }
@@ -423,11 +423,11 @@ define startup_hook ()
 {
    if (MAIN_ARGC == 1)
      {
-	if (1 == file_status(Jed_State_File))
-	  {
-	     () = evalfile (Jed_State_File);
-	     () = delete_file (Jed_State_File);
-	  }
+        if (1 == file_status(Jed_State_File))
+          {
+             () = evalfile (Jed_State_File);
+             () = delete_file (Jed_State_File);
+          }
      }
 }
 #endif

@@ -62,14 +62,14 @@ if [ ! -z "$JED_ROOT" ]; then
     # called as executable
     *) bg=; cmd=$JED_ROOT/bin/`basename $0`;
       case $cmd in
-        */xjed.bg | */Xjed)	# execute in background mode
+        */xjed.bg | */Xjed)     # execute in background mode
           cmd=$JED_ROOT/bin/xjed; bg='&'
         ;;
       esac
       
       if [ ! -x "$cmd" ]; then echo "$cmd not found"; exit 1; fi
       
-      LANG=C; export LANG	# Jed doesn't like commas, and neither do I
+      LANG=C; export LANG       # Jed doesn't like commas, and neither do I
       # echo '->'$cmd $*$bg'<-'
       eval exec $cmd $* $bg
     ;;

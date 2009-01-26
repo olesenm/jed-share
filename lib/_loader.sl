@@ -26,52 +26,52 @@
 % ---------------------------------------------------------------------------
 % list of function/filename pairs for autoload
 %
-$0 = _stkdepth();	% save stack depth
+$0 = _stkdepth();       % save stack depth
 % <align>
-	"align";	"align";
-	"align_to";	"align";
-	"back_to_indentation";	"align";
-	"indent_region";	"align";
-	"move_to_tab";	"align";
-	"tab_to_tab_stop1";	"align";
-	"trim_backward";	"align";
+        "align";        "align";
+        "align_to";     "align";
+        "back_to_indentation";  "align";
+        "indent_region";        "align";
+        "move_to_tab";  "align";
+        "tab_to_tab_stop1";     "align";
+        "trim_backward";        "align";
 % <charset>
-	"charset";	"charset";
+        "charset";      "charset";
 % <cmisc1>
-	"c_make_comment";	"cmisc1";
+        "c_make_comment";       "cmisc1";
 % <comment>
-	"c_box";	"comment";
-	"c_line";	"comment";
-	"c_un_comment";	"comment";
+        "c_box";        "comment";
+        "c_line";       "comment";
+        "c_un_comment"; "comment";
 % <cwd>
-	"cwd";	"cwd";
+        "cwd";  "cwd";
 % <helphelp>
-	"help_slang";	"helphelp";
+        "help_slang";   "helphelp";
 % <hpcalc>
-	"hpcalc";	"hpcalc";
+        "hpcalc";       "hpcalc";
 % <local>
-	"goto_column_cmd";	"local";
-	"goto_line_cmd";	"local";
-	"mark_word";	"local";
-	"string_rect";	"local";
-	"transpose_words";	"local";
-	"unindent_line";	"local";
+        "goto_column_cmd";      "local";
+        "goto_line_cmd";        "local";
+        "mark_word";    "local";
+        "string_rect";  "local";
+        "transpose_words";      "local";
+        "unindent_line";        "local";
 % <mpp_mode>
-	"mpp_mode";	"mpp_mode";
-(_stkdepth() - $0)/2;	% leave count on stack
+        "mpp_mode";     "mpp_mode";
+(_stkdepth() - $0)/2;   % leave count on stack
 _autoload;
 % ---------------------------------------------------------------------------
 % list of function names for completion
 %
-$0 = _stkdepth();	% save stack depth
+$0 = _stkdepth();       % save stack depth
 % <hpcalc>
-	"hpcalc";
-(_stkdepth() - $0);	% leave count on stack
+        "hpcalc";
+(_stkdepth() - $0);     % leave count on stack
 _add_completion;
 % ---------------------------------------------------------------------------
-	() = evalfile("helphelp");
+        () = evalfile("helphelp");
 % extensions for <mpp> mode
-	add_mode_for_extension("mpp", "MAC");
-	add_mode_for_extension("mpp", "MACRO");
+        add_mode_for_extension("mpp", "MAC");
+        add_mode_for_extension("mpp", "MACRO");
 % ----------------------------------------------------------------------- END
 

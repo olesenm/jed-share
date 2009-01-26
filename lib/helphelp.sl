@@ -29,7 +29,7 @@ define slang_mode_hook ()
 % 4) it's nice when improvements make their way back to the 'net'
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-() = evalfile ("help.sl");	% we need stuff from there
+() = evalfile ("help.sl");      % we need stuff from there
 % hijack the 'apropos', 'describe_function', 'describe_variable'
 % entry points from help_prefix() and add in the keymap information
 
@@ -45,17 +45,17 @@ private variable
 static define attach_keymap ()
 {
     !if (keymap_p(help_keymap)) {
-	make_keymap(help_keymap);
-	definekey("help_apropos", "?",   help_keymap);
-	definekey("help_slang",   "\r",  help_keymap);
-	definekey("help_slang",   "^C?", help_keymap);		% for consistency
+        make_keymap(help_keymap);
+        definekey("help_apropos", "?",   help_keymap);
+        definekey("help_slang",   "\r",  help_keymap);
+        definekey("help_slang",   "^C?", help_keymap);          % for consistency
     }
 
     variable cbuf = whatbuf();
     if (bufferp(help_buf)) {
-	setbuf(help_buf);
-	use_keymap(help_keymap);		% attach keymap here
-	setbuf(cbuf);
+        setbuf(help_buf);
+        use_keymap(help_keymap);                % attach keymap here
+        setbuf(cbuf);
     }
 }
 
@@ -69,13 +69,13 @@ static define attach_keymap ()
 static define extract_word (chars)
 {
     !if (markp()) {
-	% skip leading non-word chars, including newline
-	do {
-	    skip_chars ("^" + chars);
-	    !if (eolp()) break;
-	} while (down (1));
-	bskip_chars (chars);	% in case we started in the middle of a word
-	push_mark(); skip_chars (chars);	% mark the word
+        % skip leading non-word chars, including newline
+        do {
+            skip_chars ("^" + chars);
+            !if (eolp()) break;
+        } while (down (1));
+        bskip_chars (chars);    % in case we started in the middle of a word
+        push_mark(); skip_chars (chars);        % mark the word
     }
     return bufsubstr();
 }
@@ -94,7 +94,7 @@ static define extract_word (chars)
 define help_for_apropos (s)
 {
     if (s == NULL) return; 
-    !if (strlen (s)) return;	% no funny strings
+    !if (strlen (s)) return;    % no funny strings
 
     variable a = _apropos("Global", s, 0xF);
     variable n = length (a);
@@ -109,8 +109,8 @@ define help_for_apropos (s)
     a = a[array_sort (a)];
     foreach (__tmp(a))
       {
-	  insert(());
-	  newline();
+          insert(());
+          newline();
       }
     buffer_format_in_columns();   
     bob();
@@ -125,7 +125,7 @@ define help_for_apropos (s)
 % prompt for a string and find the Apropos context
 %\seealso{help_apropos, help_for_apropos}
 %!%-
-define apropos ()	% <OVERLOAD>
+define apropos ()       % <OVERLOAD>
 {
    variable s;
    if (MINIBUFFER_ACTIVE) return;
@@ -147,7 +147,7 @@ define describe_variable ()
     attach_keymap();
 }
 
-static variable wordchars = "0-9A-Z_a-z";	% no localized 'define_word'
+static variable wordchars = "0-9A-Z_a-z";       % no localized 'define_word'
 
 %!%+
 %\function{help_apropos}
@@ -172,7 +172,7 @@ define help_apropos ()
 % and then display S-Lang function/variable help
 %\seealso{apropos, help_apropos, help_for_function}
 %!%-
-define help_slang ()	% <AUTOLOAD>
+define help_slang ()    % <AUTOLOAD>
 {
     variable what = extract_word(wordchars);
     help_for_function(what);

@@ -23,9 +23,9 @@ set_syntax_flags( $1, 0x01 | 0x10 | 0x20 );
 
 
 () = define_keywords($1,
-		     "centcsetcsysedgegetcgetvheadloadoperoverplty" +
-		     "poptputcpsyssetrsetwtermvsetwindzoom",
-		     4);
+                     "centcsetcsysedgegetcgetvheadloadoperoverplty" +
+                     "poptputcpsyssetrsetwtermvsetwindzoom",
+                     4);
 () = define_keywords($1, "cdispclosecplotcsdelofilepldispllabpllocsnorm", 5);
 () = define_keywords($1, "clocalcscalereplotspointsystem", 6);
 
@@ -44,14 +44,14 @@ set_syntax_flags( $1, 0x01 | 0x10 | 0x20 );
 %    trim ();
 %    !if (up_1 ())
 %      {
-% 	pop_spot ();
-% 	return;
+%       pop_spot ();
+%       return;
 %      }
 %    
 %    !if (bol_bsearch_char ('#'))
 %      {
-% 	pop_spot ();
-% 	return;
+%       pop_spot ();
+%       return;
 %      }
 %    go_right_1 ();
 %    skip_white ();
@@ -67,8 +67,8 @@ set_syntax_flags( $1, 0x01 | 0x10 | 0x20 );
 %    
 %    !if (looking_at ("error"))
 %      {
-% 	if (looking_at_char ('e'))
-% 	  col -= C_Preprocess_Indent;
+%       if (looking_at_char ('e'))
+%         col -= C_Preprocess_Indent;
 %      }
 % 
 %    if (what_column () == col)
@@ -78,7 +78,7 @@ set_syntax_flags( $1, 0x01 | 0x10 | 0x20 );
 %    whitespace (col - 2);
 % }
  
-define mpp_mode ()	% <AUTO> <EXTS="MAC,MACRO">
+define mpp_mode ()      % <AUTO> <EXTS="MAC,MACRO">
 {
    variable mode = "mpp";
    set_mode(mode, 0);

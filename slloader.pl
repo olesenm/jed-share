@@ -36,7 +36,7 @@ eg,
 A 'define' statement with an '<OVERLOAD>' tag indictes the file should
 always be 'evalfile'd.
 
-The short forms '<AUTO>' and '<OVER>' may be used for '<AUTOLOAD>' 
+The short forms '<AUTO>' and '<OVER>' may be used for '<AUTOLOAD>'
 and '<OVERLOAD>', respectively.
 
 When no directories are specified on the command-line, uses the
@@ -50,7 +50,7 @@ my %opt;
 getopts('hv', \%opt) or usage();
 $opt{h} and usage();
 
-my $Verbose = delete $opt{v};	# not used very much
+my $Verbose = delete $opt{v};   # not used very much
 
 my $delim = ':';                # Unix
 $delim = ';' if $^O =~ /^(os2|MSWin32|cygwin)$/;    # systems with drives
@@ -66,7 +66,7 @@ my $error = sub {
     print STDERR "$_ ... $msg\n";
 };
 
-my %hash;	# avoid duplicates
+my %hash;       # avoid duplicates
 
 # discover all problems first and convert to absolute paths
 for (@jedlib) {
@@ -93,7 +93,7 @@ my $Date = do {
 
     my $date = sprintf "%04d-%02d-%02d", $year, $mon, $mday;
     my $time = sprintf "%02d:%02d:%02d", $hour, $min, $sec;
-    
+
     "$date $time";
 };
 
@@ -115,8 +115,8 @@ for my $dir (@jedlib) {
     for ( @files ) {
         my $file = basename( $_, $ext );
         $file !~ /^_/ or next;
-	open FILE, $_ or next;    # fail silently
-	print STDERR "<FILE NAME=\"$file\">\n" if $Verbose;
+        open FILE, $_ or next;    # fail silently
+        print STDERR "<FILE NAME=\"$file\">\n" if $Verbose;
 
         my ( @auto, @comp );
         while (<FILE>) {
@@ -151,19 +151,19 @@ for my $dir (@jedlib) {
         print STDERR "</FILE>\n" if $Verbose;
         close FILE;
 
-	$autoload .= join (
-	    '' => "% <$file>\n",
+        $autoload .= join (
+            '' => "% <$file>\n",
             map { qq{\t"$_";\t"$file";\n} } sort @auto
         ) if @auto;
-	
-	$complete .= join (
-	    '' => "% <$file>\n",
+
+        $complete .= join (
+            '' => "% <$file>\n",
             map { qq{\t"$_";\n} } sort @comp
         ) if @comp;
     }
 
     $autoload or $complete or %over or next;    # nothing found
-    
+
     my $overload =
       join ( '' => map { qq{\t() = evalfile("$_");\n} } sort keys %over );
 
@@ -174,11 +174,11 @@ for my $dir (@jedlib) {
                 "% extensions for <$mode> mode\n",
                 (
                     map { qq{\tadd_mode_for_extension("$mode", "$_");\n} }
-		    @{ $exts{$mode} }
+                    @{ $exts{$mode} }
                 )
-	    )
-	} 
-	sort keys %exts
+            )
+        }
+        sort keys %exts
     );
 
     # kill trailing newlines
@@ -208,7 +208,7 @@ __DATA__
 %
 % _loader.sl: <<<DIR>>>
 % ---------------------------------------------------------------------------
-% this file is called by 'loader.sl' and defines autoloads/completions 
+% this file is called by 'loader.sl' and defines autoloads/completions
 % for SLang files in this directory
 %
 % NOTES:
@@ -216,7 +216,7 @@ __DATA__
 %   any '<AUTOLOAD>', '<COMPLETE>', or '<COMPLETION>' tags
 %   and adds these function names to this file.
 %   The <EXTS="..."> tag (after a mode definition) is also supported.
-%  
+%
 %   eg,
 %     public define foo()  % <AUTOLOAD> <COMPLETE>
 %     define bar()         % <AUTOLOAD>
@@ -224,23 +224,23 @@ __DATA__
 %     static  define foo() % <COMPLETE> <= IGNORED (cannot export a static)
 %     define foo_mode()    % <EXTS="bar,baz">
 %
-%   any 'define' statement with an '<OVERLOAD>' tag indictes that an 
+%   any 'define' statement with an '<OVERLOAD>' tag indictes that an
 %   'evalfile()' should always be used for the file.
 %   This is useful for overloading standard library functions.
 %
 % ---------------------------------------------------------------------------
 % list of function/filename pairs for autoload
 %
-$0 = _stkdepth();	% save stack depth
+$0 = _stkdepth();       % save stack depth
 <<AUTOLOAD>>
-(_stkdepth() - $0)/2;	% leave count on stack
+(_stkdepth() - $0)/2;   % leave count on stack
 _autoload;
 % ---------------------------------------------------------------------------
 % list of function names for completion
 %
-$0 = _stkdepth();	% save stack depth
+$0 = _stkdepth();       % save stack depth
 <<COMPLETE>>
-(_stkdepth() - $0);	% leave count on stack
+(_stkdepth() - $0);     % leave count on stack
 _add_completion;
 % ---------------------------------------------------------------------------
 <<OVERLOAD>>

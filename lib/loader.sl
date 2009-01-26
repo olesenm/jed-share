@@ -27,22 +27,22 @@ static define loader ()
 
     ERROR_BLOCK { _clear_error(); }
 
-    foreach (strtok (get_jed_library_path(), ",")) {	
-	variable dir = ();
-	% append existing '_jedfuns.txt'
-	file = dircat(dir, "_jedfuns.txt");
-	if (1 == file_status(file))
-	  Jed_Doc_Files = strcat(Jed_Doc_Files, ",", file);
-
-	% look for '_loader.sl'
-	file = dircat(dir, "_loader.sl");
+    foreach (strtok (get_jed_library_path(), ",")) {    
+        variable dir = ();
+        % append existing '_jedfuns.txt'
+        file = dircat(dir, "_jedfuns.txt");
         if (1 == file_status(file))
-	  () = evalfile(file);
+          Jed_Doc_Files = strcat(Jed_Doc_Files, ",", file);
+
+        % look for '_loader.sl'
+        file = dircat(dir, "_loader.sl");
+        if (1 == file_status(file))
+          () = evalfile(file);
     }
     
     depth = _stkdepth() - depth;
     if (depth)
-      _pop_n(depth);	% clean-up possible junk left on the stack
+      _pop_n(depth);    % clean-up possible junk left on the stack
 }
-loader();	% could/should unload itself as well
+loader();       % could/should unload itself as well
 % ---------------------------------------------------------------------------

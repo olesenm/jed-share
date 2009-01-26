@@ -1,4 +1,4 @@
-% apropos.sl		-*- SLang -*-
+% apropos.sl            -*- SLang -*-
 %
 % extra routines for help.sl that provide convenient functions to help
 % navigating thru the S-Lang language help.  With minor adjustments, could
@@ -27,13 +27,13 @@ define keyword_extract ()
 
    !if (markp())
      {
-	% skip leading non-word chars, including newline
-	do {
-	   skip_chars ("^" + chars);
-	   !if (eolp ()) break;
-	} while (down (1));
-	bskip_chars (chars);	% in case we started in the middle of a word
-	push_mark (); skip_chars (chars);	% mark the word
+        % skip leading non-word chars, including newline
+        do {
+           skip_chars ("^" + chars);
+           !if (eolp ()) break;
+        } while (down (1));
+        bskip_chars (chars);    % in case we started in the middle of a word
+        push_mark (); skip_chars (chars);       % mark the word
      }
    return bufsubstr ();
 }
@@ -47,15 +47,15 @@ define help_for_apropos (s)
 {
    variable n, cbuf = whatbuf();
 
-   if (s == NULL) return; !if (strlen (s)) return;	% no funny strings
+   if (s == NULL) return; !if (strlen (s)) return;      % no funny strings
 
    n = _apropos(s, 0xF);
    pop2buf("*apropos*");
    erase_buffer();
    loop (n)
      {
-	insert(());
-	newline();
+        insert(());
+        newline();
      }
    buffer_format_in_columns();
    bob();

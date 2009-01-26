@@ -163,7 +163,7 @@ perl_mode
    
      perl_help                  Ctrl-C ?
      perl_check                 Ctrl-C c
-     perl_indent_region	      Ctrl-TAB
+     perl_indent_region       Ctrl-TAB
      perl_exec                  Ctrl-C e
      perl_info                  Ctrl-C i
      perldoc                    Ctrl-C Ctrl-H
@@ -245,11 +245,11 @@ perltidy
    The following style preferences settings in `~/.perltidyrc' seem to
    give good results:
 
-      -et=8	# standard tabs
-      -nola	# no outdent labels
-      -wba="."	# break after string concatenation
-      -se		# errors to standard error output
-      -sbt=2	# very tight square brackets
+      -et=8     # standard tabs
+      -nola     # no outdent labels
+      -wba="."  # break after string concatenation
+      -se               # errors to standard error output
+      -sbt=2    # very tight square brackets
 
 
  SEE ALSO

@@ -26,25 +26,25 @@
 % ---------------------------------------------------------------------------
 % list of function/filename pairs for autoload
 %
-$0 = _stkdepth();	% save stack depth
+$0 = _stkdepth();       % save stack depth
 % <defaults>
-	"vi_percent";	"defaults";
+        "vi_percent";   "defaults";
 % <foam_mode>
-	"foam_mode";	"foam_mode";
-(_stkdepth() - $0)/2;	% leave count on stack
+        "foam_mode";    "foam_mode";
+(_stkdepth() - $0)/2;   % leave count on stack
 _autoload;
 % ---------------------------------------------------------------------------
 % list of function names for completion
 %
-$0 = _stkdepth();	% save stack depth
+$0 = _stkdepth();       % save stack depth
 % <foam_mode>
-	"foam_mode";
-(_stkdepth() - $0);	% leave count on stack
+        "foam_mode";
+(_stkdepth() - $0);     % leave count on stack
 _add_completion;
 % ---------------------------------------------------------------------------
-%	no files for evalfile()
+%       no files for evalfile()
 % extensions for <foam> mode
-	add_mode_for_extension("foam", "C");
-	add_mode_for_extension("foam", "H");
+        add_mode_for_extension("foam", "C");
+        add_mode_for_extension("foam", "H");
 % ----------------------------------------------------------------------- END
 

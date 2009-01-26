@@ -16,7 +16,7 @@ custom_variable ("_C_Indentation_Style", "foam");
 %     ( C_Colon_Offset, C_Switch_Offset, C_Param_Offset_Max ) = (0,4,-1);
 % }
 
-define foam_mode ()	% <AUTOLOAD> <COMPLETE> <EXTS="C,H">
+define foam_mode ()     % <AUTOLOAD> <COMPLETE> <EXTS="C,H">
 {
     USE_TABS = 0;
     c_mode();

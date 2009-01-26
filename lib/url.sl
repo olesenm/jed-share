@@ -14,7 +14,7 @@
 % It's similar to a feature in SLRN that's quite handy.
 %
 % add
-%	autoload ("openURL", "url");
+%       autoload ("openURL", "url");
 % to  ~/.jedrc or $JED_ROOT/lib/defaults.sl to make it available.
 %
 % It makes a nice adjunct when authoring HTML with the Jed editor, but
@@ -45,12 +45,12 @@ define openURL ()
 
     % find "http://" first, "ftp://" second
     if (orelse
-	{ fsearch (url) }
-	  { fsearch ("ftp://") }
-	) {
-	push_mark ();
-	skip_chars ("^\t \")>]}");	% common delimiters
-	url = bufsubstr ();
+        { fsearch (url) }
+          { fsearch ("ftp://") }
+        ) {
+        push_mark ();
+        skip_chars ("^\t \")>]}");      % common delimiters
+        url = bufsubstr ();
     }
     pop_spot ();
     url = read_mini ("Open URL:", Null_String, url);
@@ -60,9 +60,9 @@ define openURL ()
 #ifdef UNIX
     % assume we're running netscape under X
     () = run_shell_cmd(
-		       sprintf 
-		       ("netscape -remote 'openURL(%s) || eval \"exec netscape '%s' &\"",
-			url, url));
+                       sprintf 
+                       ("netscape -remote 'openURL(%s) || eval \"exec netscape '%s' &\"",
+                        url, url));
 #else
     flush ("Get the Netscape plug-ins called Unix & X11");
 #endif

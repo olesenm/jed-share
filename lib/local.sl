@@ -1,4 +1,4 @@
-% local.sl		-*- SLang -*-
+% local.sl              -*- SLang -*-
 % extra local functions, some of which aid in Emacs compliance.
 % Autoload upon demand.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -21,17 +21,17 @@
 %#v-
 %\seealso{skip_word, bskip_word}
 %!%-
-define mark_word ()	% <AUTOLOAD>
+define mark_word ()     % <AUTOLOAD>
 {
     while (skip_non_word_chars(), eolp()) {
-	!if (right (1)) break;
+        !if (right (1)) break;
     }
     
     skip_word ();
     !if (is_visible_mark ()) {
-	push_visible_mark ();
-	bskip_word ();
-	exchange_point_and_mark ();
+        push_visible_mark ();
+        bskip_word ();
+        exchange_point_and_mark ();
     }
 }
 
@@ -45,9 +45,9 @@ define mark_word ()	% <AUTOLOAD>
 %#v-
 %\seealso{skip_word, bskip_word}
 %!%-
-define transpose_words ()	% <AUTOLOAD>
+define transpose_words ()       % <AUTOLOAD>
 {
-    push_mark();		% save original position
+    push_mark();                % save original position
 
     % get word2
     skip_non_word_chars();
@@ -65,11 +65,11 @@ define transpose_words ()	% <AUTOLOAD>
     variable n1 = strlen (word1);
     variable n2 = strlen (word2);
     !if (n1 and n2) {
-	pop_mark_1();		% restore original position
-	return;
+        pop_mark_1();           % restore original position
+        return;
     }
 
-    pop_mark_0();		% forget original position
+    pop_mark_0();               % forget original position
 
     deln (n1);
     insert (word2);
@@ -88,7 +88,7 @@ define transpose_words ()	% <AUTOLOAD>
 % local_setkey ("string_rect", "^XRi");
 %#v-
 %!%-
-define string_rect () 	% <AUTOLOAD>
+define string_rect ()   % <AUTOLOAD>
 {
     variable col, str, n, nlines;
     variable start;
@@ -110,9 +110,9 @@ define string_rect () 	% <AUTOLOAD>
     !if (n) return;
 
     loop (nlines) {
-	goto_column (col);
-	insert (str);
-	go_down_1();
+        goto_column (col);
+        insert (str);
+        go_down_1();
     }
     % re-mark the region
     goto_line (start);
@@ -126,7 +126,7 @@ define string_rect () 	% <AUTOLOAD>
 %\description
 % Remove indentation from beginning of line (ie, trim the beg-of-line)
 %!%-
-define unindent_line ()		% <AUTOLOAD>
+define unindent_line ()         % <AUTOLOAD>
 {
     push_spot_bol (); trim (); pop_spot ();
 }
@@ -135,7 +135,7 @@ define unindent_line ()		% <AUTOLOAD>
 static define goto_cmd (prompt, moveto, get_position)
 {
     variable target = read_mini(prompt, Null_String, Null_String);
-    if (target[0] < '0') @get_position(); else 0;	% offset from
+    if (target[0] < '0') @get_position(); else 0;       % offset from
     @moveto (integer (target) + ());
 }
 
@@ -154,7 +154,7 @@ static define goto_cmd (prompt, moveto, get_position)
 %    local_setkey ("goto_line_cmd", "\e#");
 %#v-
 %!%-
-define goto_column_cmd ()	% <AUTOLOAD>
+define goto_column_cmd ()       % <AUTOLOAD>
 {
     goto_cmd ("Goto column:", &goto_column, &what_column);
 }
@@ -173,7 +173,7 @@ define goto_column_cmd ()	% <AUTOLOAD>
 %    local_setkey ("goto_line_cmd", "\e#");
 %#v-
 %!%-
-define goto_line_cmd ()		% <AUTOLOAD>
+define goto_line_cmd ()         % <AUTOLOAD>
 {
     goto_cmd ("Goto line:", &goto_line, &what_line);
 }

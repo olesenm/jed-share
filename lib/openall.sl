@@ -1,4 +1,4 @@
-% openall.sl		-*- SLang -*-
+% openall.sl            -*- SLang -*-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % (c)1997,98 Mark Olesen
 %
@@ -24,27 +24,27 @@ define openall ()
    bol ();
    if (markp ())
      {
-	narrow ();
-	bob ();
-	EXIT_BLOCK { widen (); }
+        narrow ();
+        bob ();
+        EXIT_BLOCK { widen (); }
      }
    do
      {
-	skip_white ();
-	if (what_char () > 45)		% skip lines starting with
-	  {				% these chars: !"#$%&'()*+,-
-	     push_mark ();		% beginning of filename
+        skip_white ();
+        if (what_char () > 45)          % skip lines starting with
+          {                             % these chars: !"#$%&'()*+,-
+             push_mark ();              % beginning of filename
 #ifdef MSDOS OS2
-	     go_right (2);		% in case of "c:/filename"
+             go_right (2);              % in case of "c:/filename"
 #endif
-	     skip_chars ("^\t *:@");	% ':' (grep -l) or '*', '@' (ls -F)
-	     file = bufsubstr ();
-	     if (file_status (file) == 1) % file exists and is not a directory
-	       {
-		  () = read_file (file);
-		  setbuf (buf);
-	       }
-	  }
+             skip_chars ("^\t *:@");    % ':' (grep -l) or '*', '@' (ls -F)
+             file = bufsubstr ();
+             if (file_status (file) == 1) % file exists and is not a directory
+               {
+                  () = read_file (file);
+                  setbuf (buf);
+               }
+          }
      }
    while (down_1 ());
 }

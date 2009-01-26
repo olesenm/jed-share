@@ -26,7 +26,7 @@ define_highlight_rule ("\"([^\\\\\"]|\\\\.)*$", "string", $1);
 define_highlight_rule ("'[^']*'", "string", $1);
 define_highlight_rule ("'[^']*$", "string", $1);
 define_highlight_rule("[0-9]+(\\.[0-9]*)?([Ee][\\+\\-]?[0-9]*)?",
-		      "number", $1);
+                      "number", $1);
 define_highlight_rule ("[\\|&;\\(\\)<>]", "Qdelimiter", $1);
 define_highlight_rule ("[\\[\\]\\*\\?]", "Qoperator", $1);
 define_highlight_rule ("[^ \t\"'\\\\\\|&;\\(\\)<>\\[\\]\\*\\?]+",

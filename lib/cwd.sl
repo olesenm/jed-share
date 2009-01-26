@@ -6,7 +6,7 @@
 % of the current buffer
 %\seealso{getbuf_info, setbuf_info}
 %!%-
-define cwd ()	% <AUTOLOAD>
+define cwd ()   % <AUTOLOAD>
 {
     variable dir, file, buf, flags, obuf;
    
