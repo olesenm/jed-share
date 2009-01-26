@@ -1,0 +1,19 @@
+% User Initialization file for the JED editor  -*- SLang -*-
+% _traceback	= 0;	% Non zero means dump traceback on S-Lang errors
+
+#ifdef UNIX
+$1 = dircat (getenv ("HOME"), ".jedrc.sl");
+#else
+$0 = "jedrc.sl";
+$1 = getenv ("HOME");
+if (strlen($1)) dircat ($1, $0); else expand_jedlib_file ($0);
+$1 = ();
+#endif
+!if (BATCH)
+{
+   % "jedrc.sl" newer than "jedrc.slc"
+   if (0 < file_time_compare ($1, strcat ($1, char ('c'))))
+     byte_compile_file ($1, 1);
+}
+() = evalfile ($1);
+%%%%%%%%%%%%%%%%%%%%%%%%%% end-of-file (SLang) %%%%%%%%%%%%%%%%%%%%%%%%%%%

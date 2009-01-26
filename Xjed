@@ -1,0 +1,6 @@
+#!/bin/sh
+# run xjed in background - or normal jed (if DISPLAY is not set)
+# --------------------------------------------------------------------------
+unset LANG;	# jed has problems with LC_
+case $0 in *jemacs) unset DISPLAY;; esac
+eval exec xjed $* ${DISPLAY:+&}

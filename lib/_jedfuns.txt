@@ -1,0 +1,334 @@
+cwd
+
+ SYNOPSIS
+   Void cwd(void)
+
+ DESCRIPTION
+   fix current working directory of "*scratch*" to match that
+   of the current buffer
+
+ SEE ALSO
+   getbuf_info, setbuf_info
+--------------------------------------------------------------
+
+help_for_apropos
+
+ SYNOPSIS
+   Void help_for_apropos (String)
+
+ DESCRIPTION
+   find Apropos context for a particular string
+
+ SEE ALSO
+   apropos, help_apropos
+--------------------------------------------------------------
+
+apropos
+
+ SYNOPSIS
+   Void apropos (Void)
+
+ DESCRIPTION
+   prompt for a string and find the Apropos context
+
+ SEE ALSO
+   help_apropos, help_for_apropos
+--------------------------------------------------------------
+
+help_apropos
+
+ SYNOPSIS
+   Void help_apropos (Void)
+
+ DESCRIPTION
+   use either the marked region or else extract an alphanumeric keyword,
+   and then display S-Lang apropos context for this entry
+
+ SEE ALSO
+   apropos, help_for_apropos
+--------------------------------------------------------------
+
+help_slang
+
+ SYNOPSIS
+   Void help_slang (Void)
+
+ DESCRIPTION
+   use either the marked region or else extract an alphanumeric keyword,
+   and then display S-Lang function/variable help
+
+ SEE ALSO
+   apropos, help_apropos, help_for_function
+--------------------------------------------------------------
+
+HPrecenter
+
+ SYNOPSIS
+   Void HPrecenter(void)
+
+ DESCRIPTION
+   recenter the buffer
+
+ SEE ALSO
+   hpcalc
+--------------------------------------------------------------
+
+HPhelp
+
+ SYNOPSIS
+   Void HPhelp(Void)
+
+ DESCRIPTION
+   insert the mini-help
+
+ SEE ALSO
+   hpcalc
+--------------------------------------------------------------
+
+HPprint
+
+ SYNOPSIS
+   Void HPprint(Void)
+
+ DESCRIPTION
+   print the calculator stack
+
+ SEE ALSO
+   hpcalc
+--------------------------------------------------------------
+
+HPprec
+
+ SYNOPSIS
+   Void HPprec(void)
+
+ DESCRIPTION
+   interactively change the decimal precision (0 <= prec <= 16)
+
+ SEE ALSO
+   hpcalc, HPfix, HPsci
+--------------------------------------------------------------
+
+HPdeg
+
+ SYNOPSIS
+   Void HPdeg(void)
+
+ DESCRIPTION
+   define degrees as the units for angles
+
+ SEE ALSO
+   hpcalc, HPrad
+--------------------------------------------------------------
+
+HPrad
+
+ SYNOPSIS
+   Void HPrad(void)
+
+ DESCRIPTION
+   define radians as the units for angles
+
+ SEE ALSO
+   hpcalc, HPdeg
+--------------------------------------------------------------
+
+HPfix
+
+ SYNOPSIS
+   Void HPfix(void)
+
+ DESCRIPTION
+   define fixed (floating point) format
+
+ SEE ALSO
+   hpcalc, HPsci, HPprec
+--------------------------------------------------------------
+
+HPsci
+
+ SYNOPSIS
+   Void HPsci(void)
+
+ DESCRIPTION
+   define scientific notation
+
+ SEE ALSO
+   hpcalc, HPfix, HPprec
+--------------------------------------------------------------
+
+enter
+
+ SYNOPSIS
+   Void enter(Void)
+
+ DESCRIPTION
+   parse the input string & send to dispatch routine
+
+ SEE ALSO
+   hpcalc
+--------------------------------------------------------------
+
+HPcmd
+
+ SYNOPSIS
+   Void HPcmd(String cmd)
+
+ DESCRIPTION
+   direct command dispatch routine - insert `cmd' at the end of the buffer
+   and the calls the dispatch
+
+ SEE ALSO
+   hpcalc, HPenter
+--------------------------------------------------------------
+
+HPins
+
+ SYNOPSIS
+   Void HPins(String str)
+
+ DESCRIPTION
+   insert string (with leading/trailing space) at the end of the buffer
+
+ SEE ALSO
+   hpcalc
+--------------------------------------------------------------
+
+hpcalc
+
+ USAGE
+   Void hpcalc (void)
+
+ DESCRIPTION
+   a mode with the basic functionality of the trusty old RPN calculator from HP
+   
+   Bindings:
+
+     HPexit                     Ctrl-X k
+     HPenter                    Ctrl-M
+     HPprec                     ESC #
+     HPdeg                      ESC Ctrl-D
+     HPfix                      ESC Ctrl-F
+     HPrad                      ESC Ctrl-R
+     HPsci                      ESC Ctrl-S
+     'recenter'                 Ctrl-
+     'popup help'               ?
+
+
+ SEE ALSO
+   HPcmd, HPhelp, HPins, HPprint, HPrecenter
+--------------------------------------------------------------
+
+HPexit
+
+ SYNOPSIS
+   Void HPexit(void)
+
+ DESCRIPTION
+   kill the buffer and unload as many definitions as possible
+
+ SEE ALSO
+   hpcalc
+--------------------------------------------------------------
+
+mark_word
+
+ SYNOPSIS
+   Void mark_word (Void)
+
+ DESCRIPTION
+   marks a woard according to the current definitons of a word character
+
+    Emacs binding: setkey ("mark_word",  "\e@");
+
+
+ SEE ALSO
+   skip_word, bskip_word
+--------------------------------------------------------------
+
+transpose_word
+
+ SYNOPSIS
+   Void transpose_word (Void)
+
+ DESCRIPTION
+   transpose word1 and word2, move point after word2
+
+    Emacs binding: setkey ("transpose_words",  "\et");
+
+
+ SEE ALSO
+   skip_word, bskip_word
+--------------------------------------------------------------
+
+string_rect
+
+ SYNOPSIS
+   Void string_rect (Void)
+
+ DESCRIPTION
+   prefix each line with a string
+
+    Possible Emacs binding:
+    local_setkey ("string_rect", "^XRi");
+
+--------------------------------------------------------------
+
+unindent_line
+
+ SYNOPSIS
+   Void unindent_line (Void)
+
+ DESCRIPTION
+   Remove indentation from beginning of line (ie, trim the beg-of-line)
+--------------------------------------------------------------
+
+goto_column_cmd
+
+ SYNOPSIS
+   Void goto_column_cmd (Void)
+
+ DESCRIPTION
+   Goto to the specified column number (improved functionality).
+   If the first character of the line number is +/- (ie., <'0'), 
+   treat the value as relative to the current column.
+
+    Emacs binding:
+       setkey ("goto_line_cmd", "\eg");
+    Possible Alternative binding:
+       local_setkey ("goto_line_cmd", "\e#");
+
+--------------------------------------------------------------
+
+goto_line_cmd
+
+ SYNOPSIS
+   Void goto_line_cmd (Void)
+
+ DESCRIPTION
+   Goto to the specified line number (improved functionality).
+   If the first character of the line number is +/- (ie., <'0'), 
+   treat the value as relative to the current line.
+
+    Emacs binding:
+       setkey ("goto_line_cmd", "\eg");
+    Possible Alternative binding:
+       local_setkey ("goto_line_cmd", "\e#");
+
+--------------------------------------------------------------
+
+openURL
+
+ SYNOPSIS
+   Void openURL(Void)
+
+ DESCRIPTION
+   find an `http://' or `ftp://' address and pass it to a web
+   browser 
+   
+   Note: not available on all systems
+
+ SEE ALSO
+   getbuf_info, setbuf_info
+--------------------------------------------------------------
+

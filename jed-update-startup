@@ -1,0 +1,16 @@
+#!/usr/bin/perl -w
+use strict;
+
+open STDOUT, "> /etc/jed-defaults.sl";
+
+print <DATA>;
+for ( sort grep { -f } glob "/etc/jed-init.d/*.sl" ) {
+    print qq{() = evalfile("$_");\n}
+}
+
+__DATA__
+% This file was generated automatically by /usr/sbin/jed-update-startup
+% DO NOT EDIT IT!
+% Read the documentation in /usr/share/doc/packages/jed/README.Debian-startup
+% and /usr/share/doc/packages/jed/README.SuSE
+  
