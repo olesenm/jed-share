@@ -387,7 +387,7 @@ define HPenter()        %{{{
 {
     variable str = get_cmdline();
 
-    !if (strlen(str)) {         % blank command-line
+    ifnot (strlen(str)) {         % blank command-line
         Push_Op( Stack[0] );
         refresh();
     }
@@ -516,7 +516,7 @@ define hpcalc() % <AUTOLOAD> <COMPLETE> this function %{{{
 {
     variable i = bufferp (bufferName), mode = "hpcalc";
     pop2buf (bufferName);
-    !if (i) {
+    ifnot (i) {
         use_keymap (mode);
         use_syntax_table (mode);
         set_buffer_no_autosave();
@@ -567,7 +567,7 @@ define HPexit() %{{{
 
 %{{{ Keymap, Syntax highlighting
 $1 = "hpcalc";
-!if (keymap_p ($1)) make_keymap ($1);
+ifnot (keymap_p ($1)) make_keymap ($1);
 definekey ("HPenter",           "\r",   $1);
 definekey ("HPrecenter",        "\f",   $1);
 definekey (".\"?\"HPcmd",       "?",    $1);

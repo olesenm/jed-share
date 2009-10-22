@@ -42,13 +42,13 @@ set_syntax_flags( $1, 0x01 | 0x10 | 0x20 );
 %    push_spot_bol ();
 %    
 %    trim ();
-%    !if (up_1 ())
+%    ifnot (up_1 ())
 %      {
 %       pop_spot ();
 %       return;
 %      }
 %    
-%    !if (bol_bsearch_char ('#'))
+%    ifnot (bol_bsearch_char ('#'))
 %      {
 %       pop_spot ();
 %       return;
@@ -65,7 +65,7 @@ set_syntax_flags( $1, 0x01 | 0x10 | 0x20 );
 %    go_right_1 ();
 %    skip_white ();
 %    
-%    !if (looking_at ("error"))
+%    ifnot (looking_at ("error"))
 %      {
 %       if (looking_at_char ('e'))
 %         col -= C_Preprocess_Indent;

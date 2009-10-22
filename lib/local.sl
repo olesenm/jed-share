@@ -24,11 +24,11 @@
 define mark_word ()     % <AUTOLOAD>
 {
     while (skip_non_word_chars(), eolp()) {
-        !if (right (1)) break;
+        ifnot (right (1)) break;
     }
     
     skip_word ();
-    !if (is_visible_mark ()) {
+    ifnot (is_visible_mark ()) {
         push_visible_mark ();
         bskip_word ();
         exchange_point_and_mark ();
@@ -64,7 +64,7 @@ define transpose_words ()       % <AUTOLOAD>
 
     variable n1 = strlen (word1);
     variable n2 = strlen (word2);
-    !if (n1 and n2) {
+    ifnot (n1 and n2) {
         pop_mark_1();           % restore original position
         return;
     }
@@ -107,7 +107,7 @@ define string_rect ()   % <AUTOLOAD>
     % what string should be inserted?
     str = read_mini ("Rect String Insert:", "", "");
     n = strlen (str);
-    !if (n) return;
+    ifnot (n) return;
 
     loop (nlines) {
         goto_column (col);

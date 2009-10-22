@@ -44,7 +44,7 @@ private variable
 % distribution, we could reduce this overhead
 static define attach_keymap ()
 {
-    !if (keymap_p(help_keymap)) {
+    ifnot (keymap_p(help_keymap)) {
         make_keymap(help_keymap);
         definekey("help_apropos", "?",   help_keymap);
         definekey("help_slang",   "\r",  help_keymap);
@@ -68,11 +68,11 @@ static define attach_keymap ()
 %% %!%-
 static define extract_word (chars)
 {
-    !if (markp()) {
+    ifnot (markp()) {
         % skip leading non-word chars, including newline
         do {
             skip_chars ("^" + chars);
-            !if (eolp()) break;
+            ifnot (eolp()) break;
         } while (down (1));
         bskip_chars (chars);    % in case we started in the middle of a word
         push_mark(); skip_chars (chars);        % mark the word
@@ -94,7 +94,7 @@ static define extract_word (chars)
 define help_for_apropos (s)
 {
     if (s == NULL) return; 
-    !if (strlen (s)) return;    % no funny strings
+    ifnot (strlen (s)) return;    % no funny strings
 
     variable a = _apropos("Global", s, 0xF);
     variable n = length (a);

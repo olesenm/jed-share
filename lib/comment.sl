@@ -109,7 +109,7 @@ define c_line ()        % <AUTOLOAD>
         if (n == what_line ()) {
             pop_spot ();
             eob ();
-            !if (bolp ()) newline ();
+            ifnot (bolp ()) newline ();
             switch (name)
               { case "C":
                   (name,,,) = getbuf_info ();
@@ -203,7 +203,7 @@ define c_box () % <AUTOLOAD>
     width -= (strlen (cbeg) + strlen (cend));
     n = (width - n);
 
-    !if (dupmark ()) push_mark ();
+    ifnot (dupmark ()) push_mark ();
     check_region (1);
     narrow ();
 

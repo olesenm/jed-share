@@ -42,14 +42,14 @@ define c_make_comment ()        % <AUTOLOAD>
     % search for a comment on the line
     eol ();
     if (bfind (cbeg)) {
-        !if (bolp()) {
+        ifnot (bolp()) {
             go_left_1 ();
             trim ();
             () = ffind (cbeg);
         }
         X_USER_BLOCK0 ();
         if (strlen (cend)) {
-            !if (ffind (cend)) {
+            ifnot (ffind (cend)) {
                 eol ();
                 insert_spaces (2);
                 insert (cend);

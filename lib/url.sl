@@ -55,7 +55,7 @@ define openURL ()
     pop_spot ();
     url = read_mini ("Open URL:", Null_String, url);
     
-    !if (strlen (url)) return;
+    ifnot (strlen (url)) return;
     
 #ifdef UNIX
     % assume we're running netscape under X

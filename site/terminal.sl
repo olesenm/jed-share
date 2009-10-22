@@ -102,7 +102,7 @@ if (string_match ($1, "^kvt", 1)  or
     % map_input (127, 4);               % map: ^? -> ^D
     set_term_vtxxx (0);
     % xterm mouse support - only load once
-    !if (BATCH) !if (is_defined ("Mouse_Button")) () = evalfile ("mousex");
+    ifnot (BATCH) ifnot (is_defined ("Mouse_Button")) () = evalfile ("mousex");
 
     % we mostly have a poor terminfo for xterm Key_Home / Key_End
     local_setkey("bol",         "\e[1~");

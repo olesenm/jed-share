@@ -25,12 +25,12 @@ define keyword_extract ()
 {
    variable chars = "0-9A-Z_a-z";
 
-   !if (markp())
+   ifnot (markp())
      {
         % skip leading non-word chars, including newline
         do {
            skip_chars ("^" + chars);
-           !if (eolp ()) break;
+           ifnot (eolp ()) break;
         } while (down (1));
         bskip_chars (chars);    % in case we started in the middle of a word
         push_mark (); skip_chars (chars);       % mark the word
@@ -47,7 +47,7 @@ define help_for_apropos (s)
 {
    variable n, cbuf = whatbuf();
 
-   if (s == NULL) return; !if (strlen (s)) return;      % no funny strings
+   if (s == NULL) return; ifnot (strlen (s)) return;      % no funny strings
 
    n = _apropos(s, 0xF);
    pop2buf("*apropos*");

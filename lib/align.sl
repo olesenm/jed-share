@@ -29,8 +29,8 @@ define indent_region () % <AUTOLOAD>
 {
     variable n;
 
-    USER_BLOCK0 { !if (eolp()) indent_line(); } % only non-blank lines
-    !if (markp ()) {
+    USER_BLOCK0 { ifnot (eolp()) indent_line(); } % only non-blank lines
+    ifnot (markp ()) {
         X_USER_BLOCK0;
         return;
     }

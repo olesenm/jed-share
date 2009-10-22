@@ -62,10 +62,10 @@ define conn_man ()
 {
    variable subj, buf = "*manual-entry*", msg = "Getting man page...";
 
-   !if (is_defined ("unix_man")) () = evalfile ("man.sl");
+   ifnot (is_defined ("unix_man")) () = evalfile ("man.sl");
 
    subj = read_mini ("conn_man", Null_String, Null_String);
-   !if (strlen (subj)) return;
+   ifnot (strlen (subj)) return;
 
    pop2buf (buf);
    set_readonly (0);
@@ -306,11 +306,11 @@ setkey ("bufed", "^X^B");
 #if$OSTYPE AIX
 %{{{ toggle_compiler
 %!% compiler name in the database "compile.dat"
-!if (is_defined ("compile_parse_error_function"))
+ifnot (is_defined ("compile_parse_error_function"))
 variable compile_parse_error_function = Null_String;
 
 %!% regular expression to extract compile errors
-!if (is_defined ("compile_parse_regexp"))
+ifnot (is_defined ("compile_parse_regexp"))
 variable compile_parse_regexp = Null_String;
 
 define toggle_compiler ()
@@ -331,7 +331,7 @@ add_completion ("toggle_compiler");
 %  a file.
 %
 
-!if (is_defined ("search_across_lines")) () = evalfile ("search");
+ifnot (is_defined ("search_across_lines")) () = evalfile ("search");
 % This evalfile also brings in replace_do_replace.
 
 define search_across_buffer_files ()
@@ -341,7 +341,7 @@ define search_across_buffer_files ()
    variable str, buf, file, flags;
 
    str = read_mini ("Search files:", LAST_SEARCH, Null_String);
-   !if (strlen (str)) return;
+   ifnot (strlen (str)) return;
    save_search_string (str);
 
    push_spot ();                % save our location
@@ -364,7 +364,7 @@ define search_across_buffer_files ()
         (file,,,flags) = getbuf_info ();
 
         % skip if no file associated with buffer, or is read only
-        !if (strlen (file) or (flags & 8)) continue;
+        ifnot (strlen (file) or (flags & 8)) continue;
 
         % ok, this buffer is what we want.
 

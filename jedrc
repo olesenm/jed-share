@@ -9,7 +9,7 @@ $1 = getenv ("HOME");
 if (strlen($1)) dircat ($1, $0); else expand_jedlib_file ($0);
 $1 = ();
 #endif
-!if (BATCH)
+ifnot (BATCH)
 {
    % "jedrc.sl" newer than "jedrc.slc"
    if (0 < file_time_compare ($1, strcat ($1, char ('c'))))
