@@ -1,0 +1,12 @@
+#!/bin/sh
+# pack into a tar.gz with a particular version number
+# the form package-version.tar.gz is expected by an rpm packager
+
+package=slang
+version=2.2.0
+
+tar -cvzf \
+    $package-$version.tar.gz \
+    --transform="s:^$package:$package-$version:" \
+    $package/*
+

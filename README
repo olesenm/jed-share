@@ -2,4 +2,6 @@ Shared data for jed
     lib/    contains custom modes
     site/   contains overrides for the standard distribution
 
+    tools/  tools for rpm packaging
+
 slloader.pl create _loader.sl files
