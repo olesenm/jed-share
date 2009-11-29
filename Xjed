@@ -1,6 +1,16 @@
 #!/bin/sh
 # run xjed in background - or normal jed (if DISPLAY is not set)
-# --------------------------------------------------------------------------
-unset LANG;     # jed has problems with LC_
+# -----------------------------------------------------------------------------
+if [ "$1" = "-iso" ]
+then
+    unset LANG             # enable ISO encodings instead of UTF
+    shift
+elif [ "$1" = "-utf" ]
+then
+    export JED_UTF8=FORCE  # force UTF encodings
+    shift
+fi
 case $0 in *jemacs) unset DISPLAY;; esac
 eval exec xjed $* ${DISPLAY:+&}
+
+# ----------------------------------------------------------------- end-of-file

@@ -3,7 +3,11 @@
 # the form package-version.tar.gz is expected by an rpm packager
 
 package=slang
-version=2.2.0
+version=2.2.2
+
+[ "$#" -gt 0 ] && version=$1
+
+echo "create $package-$version.tar.gz"
 
 tar -cvzf \
     $package-$version.tar.gz \

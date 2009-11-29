@@ -1,7 +1,7 @@
 Summary: Fast, compact editor based on the S-Lang screen library
 Name: jed
 Version: 0.99.19
-Release: 197
+Release: 219
 License: GPL
 Group: Applications/Editors
 Source0: ftp://space.mit.edu/pub/davis/jed/v0.99/jed-%{version}.tar.gz

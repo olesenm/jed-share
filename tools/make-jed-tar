@@ -5,6 +5,10 @@
 package=jed
 version=0.99.19
 
+[ "$#" -gt 0 ] && version=$1
+
+echo "create $package-$version.tar.gz"
+
 tar -cvzf \
     $package-$version.tar.gz \
     --transform="s:^$package:$package-$version:" \

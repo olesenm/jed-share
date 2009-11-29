@@ -1,7 +1,7 @@
 Summary: The shared library for the S-Lang extension language.
 Name: slang
-Version: 2.2.0
-Release: 81
+Version: 2.2.2
+Release: 10
 License: GPL
 Group: System Environment/Libraries
 Source: ftp://ftp.fu-berlin.de/pub/unix/misc/slang/v2.0/slang-%{version}.tar.gz
