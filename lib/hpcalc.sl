@@ -246,7 +246,7 @@ static define get_help()        %{{{
 static define change_precision()        %{{{
 {
     displayPrecison = 6;  % fallback value
-    variable i = integer (read_mini ("Precision:", string(displayPrecison), Null_String));
+    variable i = integer(read_mini("Precision:", string(displayPrecison), Null_String));
     if (i >= 16) displayPrecison = 16; else if (i >= 0) displayPrecison = i;
 }
 %}}}
@@ -264,7 +264,7 @@ static define get_cmdline()     %{{{
 }
 
 % change the base and format
-static define new_format (base, fmt)
+static define new_format(base, fmt)
 {
     displayBase = base;
     displayFormat = fmt;
@@ -273,7 +273,7 @@ static define new_format (base, fmt)
 
 % binary operations:
 % pop two values and push one - thus also roll-down the stack
-static define Binary_Op (val)
+static define Binary_Op(val)
 {
     Stack[1] = val;
     Stack = [ Stack[[1:]], 0 ];
@@ -281,13 +281,13 @@ static define Binary_Op (val)
 
 % unary operations:
 % pop one value and push one - thus simply replace the last value on the stack
-static define Unary_Op (val)
+static define Unary_Op(val)
 {
     Stack[0] = val;
 }
 
 % push a new value on to the stack, truncating the top value
-static define Push_Op (val)
+static define Push_Op(val)
 {
 #ifdef SLANG_DOUBLE_TYPE
     val = double(val);
@@ -305,12 +305,12 @@ Command["reset"] = &reset();
 Command["prec"]  = &change_precision();
 
 %!% command dispatch routine - internal usage
-static define dispatch (cmd)    %{{{
+static define dispatch(cmd)    %{{{
 {
     variable x = Stack[0], y = Stack[1];
     variable ix = int(x), iy = int(y);  % integer form of the same
 
-    cmd = strlow (cmd);
+    cmd = strlow(cmd);
 
     if (assoc_key_exists(Command, cmd)) {
         @Command[cmd];
@@ -364,7 +364,7 @@ static define dispatch (cmd)    %{{{
     { case "deg":  angleConversion = PI / 180; }        % degrees for angles
     { case "rad":  angleConversion = 1; }       % radians for angles
 #else
-    { case "dec" or case "fix" or case "sci": new_format (10, "%d"); }
+    { case "dec" or case "fix" or case "sci": new_format(10, "%d"); }
     { case "deg" or case "rad": ; }     % no op
 #endif
     { case "clear":  last_value = 0; Stack[*] = 0; }    % clear the stack
@@ -372,7 +372,7 @@ static define dispatch (cmd)    %{{{
     { case "chs":  Unary_Op( -x ); }            % -x
     { case "!": Unary_Op( not(ix) ); }
     { case "~":  Unary_Op( ~ix ); }
-    { verror ("no calc function `%s'", cmd); }
+    { verror("no calc function `%s'", cmd); }
 }
 %}}}
 
@@ -396,11 +396,11 @@ define HPenter()        %{{{
     % dispatch command line args/values
     foreach (args) {
         variable tok = ();
-        if (has_comma_problem) tok = str_replace_all( tok, ",", "." );
-        switch (_slang_guess_type (tok))
+        if (has_comma_problem) tok = str_replace_all(tok, ",", "." );
+        switch (_slang_guess_type(tok))
           { case Double_Type:
               % BUG: - atof() doesn't like decimals ?
-              if (has_comma_problem) tok = str_replace_all( tok, ".", "," );
+              if (has_comma_problem) tok = str_replace_all(tok, ".", ",");
               last_value = atof(tok);
               Push_Op( last_value );
           }
@@ -410,7 +410,7 @@ define HPenter()        %{{{
           }
           { case String_Type:
               if (tok[0] == '\'') {     % character values
-                  last_value = int( extract_element( tok, 1, '\'' ) );
+                  last_value = int(extract_element(tok, 1, '\''));
                   Push_Op( last_value );
               }
               else {
@@ -445,7 +445,7 @@ define HPcmd(tok)       %{{{
 % insert string (with leading/trailing space) at the end of the buffer
 %\seealso{hpcalc}
 %!%-
-define HPins (str)
+define HPins(str)
 {
     insert( strcat(" ", str, " ") );
 }
@@ -460,7 +460,7 @@ static define refresh() %{{{
 #else
     "int";                      % integer only
 #endif
-    variable status_line = () + " base " + string (displayBase);
+    variable status_line = () + " base " + string(displayBase);
 
     sw2buf(bufferName);
     erase_buffer();
@@ -471,23 +471,23 @@ static define refresh() %{{{
     foreach (Stack) {
         val = ();
         bob();
-        vinsert ("[%d]\t", i);
+        vinsert("[%d]\t", i);
         i++;
 
         switch (displayBase)
 #ifdef SLANG_DOUBLE_TYPE
-        { case 10: sprintf (displayFormat, displayPrecison, val); }
+        { case 10: sprintf(displayFormat, displayPrecison, val); }
 #endif
         { case 0 and (int(val) == 10) : "'^J'"; }       % linefeed
-        { sprintf (displayFormat, int(val)); }
-        insert (());
+        { sprintf(displayFormat, int(val)); }
+        insert(());
         newline();
     }
 
     % add the status line(s)
     bob();
-    vinsert ("[ %s: RPN calculator (v0.98) ]\n", status_line);
-    set_status_line ("[" + status_line + "]  <%b>   Help: '?'  %o %t", 0);
+    vinsert("[ %s: RPN calculator (v0.98) ]\n", status_line);
+    set_status_line("[" + status_line + "]  <%b>   Help: '?'  %o %t", 0);
 
     % add the prompt
     eob();
@@ -499,7 +499,7 @@ static define refresh() %{{{
 
 %!%+
 %\function{hpcalc}
-%\usage{Void hpcalc (void)}
+%\usage{Void hpcalc(void)}
 %\description
 % a mode with the basic functionality of the trusty old RPN calculator from HP
 %
@@ -514,11 +514,11 @@ static define refresh() %{{{
 %!%-
 define hpcalc() % <AUTOLOAD> <COMPLETE> this function %{{{
 {
-    variable i = bufferp (bufferName), mode = "hpcalc";
-    pop2buf (bufferName);
+    variable i = bufferp(bufferName), mode = "hpcalc";
+    pop2buf(bufferName);
     ifnot (i) {
-        use_keymap (mode);
-        use_syntax_table (mode);
+        use_keymap(mode);
+        use_syntax_table(mode);
         set_buffer_no_autosave();
         set_buffer_undo(1);
 
@@ -528,7 +528,7 @@ define hpcalc() % <AUTOLOAD> <COMPLETE> this function %{{{
 
     % resize window (migrate to site.sl?)
     if (nwindows() == 2) {
-        i = Stack_size + 2 - window_info ('r');
+        i = Stack_size + 2 - window_info('r');
         if (i >= 0) {
             loop (i) enlargewin();
         }
@@ -555,7 +555,7 @@ define HPexit() %{{{
     if (bufferName == whatbuf()) {
         set_buffer_modified_flag(0);
         delbuf(bufferName);
-        eval (".(\"hpcalc.sl\"expand_jedlib_file evalfile pop)hpcalc");
+        eval(".(\"hpcalc.sl\"expand_jedlib_file evalfile pop)hpcalc");
         % try to pop down the old calculator window
         if (2 == nwindows()) {
             call("other_window");
@@ -567,58 +567,58 @@ define HPexit() %{{{
 
 %{{{ Keymap, Syntax highlighting
 $1 = "hpcalc";
-ifnot (keymap_p ($1)) make_keymap ($1);
-definekey ("HPenter",           "\r",   $1);
-definekey ("HPrecenter",        "\f",   $1);
-definekey (".\"?\"HPcmd",       "?",    $1);
+ifnot (keymap_p($1)) make_keymap($1);
+definekey("HPenter",           "\r",   $1);
+definekey("HPrecenter",        "\f",   $1);
+definekey(".\"?\"HPcmd",       "?",    $1);
 #ifdef SLANG_DOUBLE_TYPE
-definekey (".\"PI\"HPins",      "\eP",  $1);
-definekey (".\"cos\"HPins",     "\ec",  $1);
-definekey (".\"sin\"HPins",     "\es",  $1);
-definekey (".\"tan\"HPins",     "\et",  $1);
-definekey (".\"acos\"HPins",    "\eC",  $1);
-definekey (".\"asin\"HPins",    "\eS",  $1);
-definekey (".\"atan\"HPins",    "\eT",  $1);
-definekey (".\"acos\"HPins",    "\eAc", $1);
-definekey (".\"asin\"HPins",    "\eAs", $1);
-definekey (".\"atan\"HPins",    "\eAt", $1);
-definekey (".\"exp\"HPins",     "\ee",  $1);
-definekey (".\"log\"HPins",     "\el",  $1);
-definekey (".\"alog\"HPins",    "\eL",  $1);
-definekey (".\"alog\"HPins",    "\eAl", $1);
-definekey (".\"ln\"HPins",      "\en",  $1);
-definekey (".\"sqrt\"HPins",    "\eq",  $1);
-definekey (".\"inv\"HPins",     "\e/",  $1);
+definekey(".\"PI\"HPins",      "\eP",  $1);
+definekey(".\"cos\"HPins",     "\ec",  $1);
+definekey(".\"sin\"HPins",     "\es",  $1);
+definekey(".\"tan\"HPins",     "\et",  $1);
+definekey(".\"acos\"HPins",    "\eC",  $1);
+definekey(".\"asin\"HPins",    "\eS",  $1);
+definekey(".\"atan\"HPins",    "\eT",  $1);
+definekey(".\"acos\"HPins",    "\eAc", $1);
+definekey(".\"asin\"HPins",    "\eAs", $1);
+definekey(".\"atan\"HPins",    "\eAt", $1);
+definekey(".\"exp\"HPins",     "\ee",  $1);
+definekey(".\"log\"HPins",     "\el",  $1);
+definekey(".\"alog\"HPins",    "\eL",  $1);
+definekey(".\"alog\"HPins",    "\eAl", $1);
+definekey(".\"ln\"HPins",      "\en",  $1);
+definekey(".\"sqrt\"HPins",    "\eq",  $1);
+definekey(".\"inv\"HPins",     "\e/",  $1);
 #endif
-definekey (".\"abs\"HPins",     "\e|",  $1);
-definekey (".\"chs\"HPins",     "\e-",  $1);
+definekey(".\"abs\"HPins",     "\e|",  $1);
+definekey(".\"chs\"HPins",     "\e-",  $1);
 
-definekey (".\"last\"HPins",    "\e\r", $1);
-definekey (".\"sq\"HPins",      "^Q",   $1);
-definekey (".\"roll\"HPcmd",    "^V",   $1);
-definekey (".\"prec\"HPcmd",    "\e#",  $1);
-definekey (".\"deg\"HPcmd",     "\e^D", $1);
-definekey (".\"rad\"HPcmd",     "\e^R", $1);
-definekey (".\"fix\"HPcmd",     "\e^F", $1);
-definekey (".\"sci\"HPcmd",     "\e^S", $1);
-definekey ("HPexit",            "^XK",  $1);
+definekey(".\"last\"HPins",    "\e\r", $1);
+definekey(".\"sq\"HPins",      "^Q",   $1);
+definekey(".\"roll\"HPcmd",    "^V",   $1);
+definekey(".\"prec\"HPcmd",    "\e#",  $1);
+definekey(".\"deg\"HPcmd",     "\e^D", $1);
+definekey(".\"rad\"HPcmd",     "\e^R", $1);
+definekey(".\"fix\"HPcmd",     "\e^F", $1);
+definekey(".\"sci\"HPcmd",     "\e^S", $1);
+definekey("HPexit",            "^XK",  $1);
 
 $1 = "hpcalc";
 % Now create and initialize the syntax tables.
-create_syntax_table ($1);
-define_syntax ("[", "]", '%', $1);
-define_syntax ('\'', '\'',      $1);
-define_syntax ("a-zA-Z", 'w',   $1);            % words
-define_syntax ("-+.0-9a-fA-FxX", '0',   $1);    % Numbers
-define_syntax (",;.",           ',',    $1);
-define_syntax ("%-+/&*<>|!~^",  '+',    $1);
-set_syntax_flags ($1, 1);
+create_syntax_table($1);
+define_syntax("[", "]", '%', $1);
+define_syntax('\'', '\'',      $1);
+define_syntax("a-zA-Z", 'w',   $1);            % words
+define_syntax("-+.0-9a-fA-FxX", '0',   $1);    % Numbers
+define_syntax(",;.",           ',',    $1);
+define_syntax("%-+/&*<>|!~^",  '+',    $1);
+set_syntax_flags($1, 1);
 
-() = define_keywords_n ($1, "Ex", 1, 0);
-() = define_keywords_n ($1, "lnPIsq", 2, 0);
-() = define_keywords_n ($1, "abschscosdegexpfixhexintinvlogoctradscisintanxor", 3, 0);
-() = define_keywords_n ($1, "acosasinatancharfrachelplastprecrollsqrt", 4, 0);
-() = define_keywords_n ($1, "clearresettodegtorad", 5, 0); % log10
+() = define_keywords_n($1, "Ex", 1, 0);
+() = define_keywords_n($1, "lnPIsq", 2, 0);
+() = define_keywords_n($1, "abschscosdegexpfixhexintinvlogoctradscisintanxor", 3, 0);
+() = define_keywords_n($1, "acosasinatancharfrachelplastprecrollsqrt", 4, 0);
+() = define_keywords_n($1, "clearresettodegtorad", 5, 0); % log10
 %}}}
 
 % main entry point

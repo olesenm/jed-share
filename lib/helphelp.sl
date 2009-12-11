@@ -8,11 +8,11 @@
 % If a region is marked, it will be used for the query
 %
 % you can also add the following to your ~/.jedrc file
-#iffalse 
+#iffalse
 autoload("help_slang", "helphelp.sl");
-define slang_mode_hook ()
+define slang_mode_hook()
 {
-    local_setkey ("help_slang", "^C?");
+    local_setkey("help_slang", "^C?");
 }
 #endif
 % to enable this functionality from within 'slang_mode'.
@@ -29,7 +29,7 @@ define slang_mode_hook ()
 % 4) it's nice when improvements make their way back to the 'net'
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-() = evalfile ("help.sl");      % we need stuff from there
+() = evalfile("help.sl");      % we need stuff from there
 % hijack the 'apropos', 'describe_function', 'describe_variable'
 % entry points from help_prefix() and add in the keymap information
 
@@ -42,7 +42,7 @@ private variable
 % have no help mode and the user may have deleted the buffer in
 % the meantime ... with a bit better integration in the main JED
 % distribution, we could reduce this overhead
-static define attach_keymap ()
+static define attach_keymap()
 {
     ifnot (keymap_p(help_keymap)) {
         make_keymap(help_keymap);
@@ -62,20 +62,20 @@ static define attach_keymap ()
 %% %!%+
 %% %\function{extract_word}
 %% %\synopsis{extract_word}
-%% %\usage{String extract_word (String Word_Chars)}
+%% %\usage{String extract_word(String Word_Chars)}
 %% %\description
 %% % extract a word defined by \var{Word_Chars} from the current buffer
 %% %!%-
-static define extract_word (chars)
+static define extract_word(chars)
 {
     ifnot (markp()) {
         % skip leading non-word chars, including newline
         do {
-            skip_chars ("^" + chars);
+            skip_chars("^" + chars);
             ifnot (eolp()) break;
-        } while (down (1));
-        bskip_chars (chars);    % in case we started in the middle of a word
-        push_mark(); skip_chars (chars);        % mark the word
+        } while (down(1));
+        bskip_chars(chars);    % in case we started in the middle of a word
+        push_mark(); skip_chars(chars);        % mark the word
     }
     return bufsubstr();
 }
@@ -86,33 +86,33 @@ static define extract_word (chars)
 
 %!%+
 %\function{help_for_apropos}
-%\synopsis{Void help_for_apropos (String)}
+%\synopsis{Void help_for_apropos(String)}
 %\description
 % find Apropos context for a particular string
 %\seealso{apropos, help_apropos}
 %!%-
-define help_for_apropos (s)
+define help_for_apropos(s)
 {
-    if (s == NULL) return; 
-    ifnot (strlen (s)) return;    % no funny strings
+    if (s == NULL) return;
+    ifnot (strlen(s)) return;    % no funny strings
 
     variable a = _apropos("Global", s, 0xF);
-    variable n = length (a);
+    variable n = length(a);
     variable cbuf = whatbuf();
 
-    vmessage ("Found %d matches.", n);
+    vmessage("Found %d matches.", n);
 
     pop2buf(help_buf);
     attach_keymap();
     erase_buffer();
-    
-    a = a[array_sort (a)];
+
+    a = a[array_sort(a)];
     foreach (__tmp(a))
       {
           insert(());
           newline();
       }
-    buffer_format_in_columns();   
+    buffer_format_in_columns();
     bob();
     set_buffer_modified_flag(0);
     pop2buf(cbuf);
@@ -120,12 +120,12 @@ define help_for_apropos (s)
 
 %!%+
 %\function{apropos}
-%\synopsis{Void apropos (Void)}
+%\synopsis{Void apropos(Void)}
 %\description
 % prompt for a string and find the Apropos context
 %\seealso{help_apropos, help_for_apropos}
 %!%-
-define apropos ()       % <OVERLOAD>
+define apropos()       % <OVERLOAD>
 {
    variable s;
    if (MINIBUFFER_ACTIVE) return;
@@ -135,15 +135,15 @@ define apropos ()       % <OVERLOAD>
 }
 
 % copied from help.sl - added keymap
-define describe_function ()
+define describe_function()
 {
-    help_do_help_for_object ("Describe Function:", 0x3);
+    help_do_help_for_object("Describe Function:", 0x3);
     attach_keymap();
 }
 
-define describe_variable ()
+define describe_variable()
 {
-    help_do_help_for_object ("Describe Variable:", 0xC);
+    help_do_help_for_object("Describe Variable:", 0xC);
     attach_keymap();
 }
 
@@ -151,13 +151,13 @@ static variable wordchars = "0-9A-Z_a-z";       % no localized 'define_word'
 
 %!%+
 %\function{help_apropos}
-%\synopsis{Void help_apropos (Void)}
+%\synopsis{Void help_apropos(Void)}
 %\description
 % use either the marked region or else extract an alphanumeric keyword,
 % and then display S-Lang apropos context for this entry
 %\seealso{apropos, help_slang, help_for_apropos}
 %!%-
-define help_apropos ()
+define help_apropos()
 {
     variable what = extract_word(wordchars);
     help_for_apropos(what);
@@ -166,13 +166,13 @@ define help_apropos ()
 
 %!%+
 %\function{help_slang}
-%\synopsis{Void help_slang (Void)}
+%\synopsis{Void help_slang(Void)}
 %\description
 % use either the marked region or else extract an alphanumeric keyword,
 % and then display S-Lang function/variable help
 %\seealso{apropos, help_apropos, help_for_function}
 %!%-
-define help_slang ()    % <AUTOLOAD>
+define help_slang()    % <AUTOLOAD>
 {
     variable what = extract_word(wordchars);
     help_for_function(what);

@@ -33,36 +33,38 @@
 %\synopsis{Void openURL(Void)}
 %\description
 % find an \var{http://} or \var{ftp://} address and pass it to a web
-% browser 
+% browser
 %
 % Note: not available on all systems
 %\seealso{getbuf_info, setbuf_info}
 %!%-
-define openURL ()
+define openURL()
 {
     variable url = "http://";
-    push_spot ();
+    push_spot();
 
     % find "http://" first, "ftp://" second
     if (orelse
-        { fsearch (url) }
-          { fsearch ("ftp://") }
+        { fsearch(url) }
+          { fsearch("ftp://") }
         ) {
-        push_mark ();
-        skip_chars ("^\t \")>]}");      % common delimiters
-        url = bufsubstr ();
+        push_mark();
+        skip_chars("^\t \")>]}");      % common delimiters
+        url = bufsubstr();
     }
-    pop_spot ();
-    url = read_mini ("Open URL:", Null_String, url);
-    
-    ifnot (strlen (url)) return;
-    
+    pop_spot();
+    url = read_mini("Open URL:", Null_String, url);
+
+    ifnot (strlen(url)) return;
+
 #ifdef UNIX
     % assume we're running netscape under X
-    () = run_shell_cmd(
-                       sprintf 
-                       ("netscape -remote 'openURL(%s) || eval \"exec netscape '%s' &\"",
-                        url, url));
+    () = run_shell_cmd
+    (
+        sprintf
+        ("netscape -remote 'openURL(%s) || eval \"exec netscape '%s' &\"",
+            url, url)
+    );
 #else
     flush ("Get the Netscape plug-ins called Unix & X11");
 #endif

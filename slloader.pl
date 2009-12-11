@@ -1,6 +1,5 @@
 #!/usr/bin/perl -w
 use strict;
-use Carp;
 use Cwd;
 use File::Basename;
 use File::Spec;

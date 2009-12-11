@@ -12,14 +12,14 @@
 
 %!%+
 %\function{charset}
-%\synopsis{Void charset (Void)}
+%\synopsis{Void charset(Void)}
 %\description
 % popup a buffer with the character set 0 - 255 (without control chars)
 %!%-
-define charset ()       % <AUTOLOAD>
+define charset()       % <AUTOLOAD>
 {
     variable buf = "*character-set*";
-    
+
     pop2buf(buf);
     erase_buffer();
     insert(buf);
@@ -27,10 +27,10 @@ define charset ()       % <AUTOLOAD>
     variable i = 0;
     loop (2) {
         % skip control characters
-        vinsert ("\n%3d [0x%X]", i, i);
+        vinsert("\n%3d [0x%X]", i, i);
         i += 32;
         loop (3) {
-            vinsert ("\n%3d [0x%X]\t", i, i);
+            vinsert("\n%3d [0x%X]\t", i, i);
             loop (32) {
                 insert_char(i);
                 i++;

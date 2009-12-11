@@ -6,14 +6,16 @@
 % of the current buffer
 %\seealso{getbuf_info, setbuf_info}
 %!%-
-define cwd ()   % <AUTOLOAD>
+define cwd()   % <AUTOLOAD>
 {
     variable dir, file, buf, flags, obuf;
-   
+
     (,dir,obuf,) = getbuf_info ();
-    
-    setbuf ("*scratch*");
-    (file,, buf, flags) = getbuf_info ();
-    setbuf_info (file, dir, buf, flags);
-    setbuf (obuf);
+
+    setbuf("*scratch*");
+    (file,, buf, flags) = getbuf_info();
+    setbuf_info(file, dir, buf, flags);
+    setbuf(obuf);
 }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%% end-of-file (SLang) %%%%%%%%%%%%%%%%%%%%%%%%%%

@@ -13,42 +13,42 @@ if (strlen(expand_jedlib_file("loader.sl"))) () = evalfile("loader.sl");
 
 %{{{ default key bindings
 ifnot (BATCH) {
-    () = evalfile ("emacs");
+    () = evalfile("emacs");
     % don't like incremental search
-    setkey ("search_backward",  "^R");
-    setkey ("search_forward",   "^S");
-    setkey ("trim_buffer",      "^X^O");        % Emacs: delete-blank-lines
+    setkey("search_backward",  "^R");
+    setkey("search_forward",   "^S");
+    setkey("trim_buffer",      "^X^O");        % Emacs: delete-blank-lines
 
-    setkey ("re_search_backward","\e^R");       % Emacs: C-M-r
-    setkey ("re_search_forward",        "\e^S");        % Emacs: C-M-s
-    % setkey ("sys_spawn_cmd",  "^X^Z");        % Emacs: suspend-emacs
+    setkey("re_search_backward","\e^R");       % Emacs: C-M-r
+    setkey("re_search_forward",        "\e^S");        % Emacs: C-M-s
+    % setkey("sys_spawn_cmd",  "^X^Z");        % Emacs: suspend-emacs
 
-    setkey ("mark_word",                "\e@");         % Emacs: mark-word
-    setkey ("transpose_words",  "\et");         % Emacs: M-t
-    setkey ("goto_line_cmd",    "\e#");         % M-#   % arbitrary
-    setkey ("string_rect",      "^XRi");        % rectangle related
+    setkey("mark_word",                "\e@");         % Emacs: mark-word
+    setkey("transpose_words",  "\et");         % Emacs: M-t
+    setkey("goto_line_cmd",    "\e#");         % M-#   % arbitrary
+    setkey("string_rect",      "^XRi");        % rectangle related
 
-    % $1 = getenv ("LANG");
-    % if (string_match ($1, "^de", 1)) {        % german keyboard
-    setkey ("self_insert_cmd",  "`");   % instead of quoted_insert
-    setkey ("dabbrev",          "\e-"); % instead of ESC-/
+    % $1 = getenv("LANG");
+    % if (string_match($1, "^de", 1)) {        % german keyboard
+    setkey("self_insert_cmd",  "`");   % instead of quoted_insert
+    setkey("dabbrev",          "\e-"); % instead of ESC-/
     % }
 
 #ifdef MSWINDOWS
-    set_status_line ("(WJed %v) Emacs: %b    (%m%a%n%o)  %p,%c   %t", 1);
+    set_status_line("(WJed %v) Emacs: %b    (%m%a%n%o)  %p,%c   %t", 1);
 #elifdef XWINDOWS
-    set_status_line ("(XJed %v) Emacs: %b    (%m%a%n%o)  %p,%c   %t", 1);
+    set_status_line("(XJed %v) Emacs: %b    (%m%a%n%o)  %p,%c   %t", 1);
 #endif
-    autoload ("bufed", "bufed");
-    setkey ("bufed", "^X^B");
+    autoload("bufed", "bufed");
+    setkey("bufed", "^X^B");
 }
 %}}}
 
 %{{{ vi_percent()
 %!% Go to the matching parenthesis if on parenthesis otherwise insert %
-define vi_percent ()    % <AUTOLOAD>
+define vi_percent()    % <AUTOLOAD>
 {
-    variable ch = what_char ();
+    variable ch = what_char();
     variable pairs = "([{}])";
 
     ifnot (strcmp("html", get_mode_name()))
@@ -56,22 +56,22 @@ define vi_percent ()    % <AUTOLOAD>
         pairs = "([{<>}])";
     }
 
-    if (ch and is_substr (pairs, char(ch))) {
-        push_mark ();
-        if (1 == find_matching_delimiter (ch)) {
-            pop_mark_0 ();
+    if (ch and is_substr(pairs, char(ch))) {
+        push_mark();
+        if (1 == find_matching_delimiter(ch)) {
+            pop_mark_0();
         }
         else {
-            pop_mark_1 ();
+            pop_mark_1();
             error("mismatched");
         }
     }
     else {
-        insert_char ('%');
+        insert_char('%');
     }
 }
 #iftrue
-setkey ("vi_percent", "%");
+setkey("vi_percent", "%");
 #endif
 %}}}
 
@@ -105,13 +105,13 @@ C_Comment_Column = 41;          % column for a C comment (put on tab stop)
 %}}}
 %----------------------------------------------------------------------
 %{{{ LaTeX stuff
-add_mode_for_extension ("latex", "tex");        % overrides tex_mode
-add_mode_for_extension ("latex", "sty");
-add_mode_for_extension ("latex", "cls");
+add_mode_for_extension("latex", "tex");        % overrides tex_mode
+add_mode_for_extension("latex", "sty");
+add_mode_for_extension("latex", "cls");
 %}}}
 %----------------------------------------------------------------------
 
 %{{{ terminal characteristics/keys
-ifnot (BATCH) { () = evalfile ("terminal.sl"); }
+ifnot (BATCH) { () = evalfile("terminal.sl"); }
 %}}}
 %%%%%%%%%%%%%%%%%%%%%%%%%% end-of-file (SLang) %%%%%%%%%%%%%%%%%%%%%%%%%%%

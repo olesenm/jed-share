@@ -2,7 +2,7 @@
 % align.sl
 % misc. routines for indenting, aligning, etc.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% (c)1997-2002 Mark Olesen
+% (c)1997-2002,2009 Mark Olesen
 %
 % Do as you wish with this code under the following conditions:
 % 1) leave this notice intact
@@ -18,34 +18,71 @@
 % indent each non-blank line in the region
 %#v+
 % Emacs key binding:
-%   local_setkey ("indent_region", "\e^\\");    % Emacs: C-M-\
+%   local_setkey("indent_region", "\e^\\");    % Emacs: C-M-\
 %#v-
 %#v+
 % Possible Alternative key bindings (better for European keyboards):
-%   local_setkey ("indent_region", "^XR\t");
+%   local_setkey("indent_region", "^XR\t");
 %#v-
 %!%-
-define indent_region () % <AUTOLOAD>
+define indent_region() % <AUTOLOAD>
 {
     variable n;
 
     USER_BLOCK0 { ifnot (eolp()) indent_line(); } % only non-blank lines
-    ifnot (markp ()) {
+
+    ifnot (markp()) {
         X_USER_BLOCK0;
         return;
     }
 
-    check_region (0);           % canonical region
-    n = what_line (); n++;      % final line, inclusive
-    pop_mark_1 ();              % return to first line
-    n -= what_line ();
-    loop (n) {                  % indent line by line (ie slowly)
+    check_region(0);           % canonical region
+    n = what_line(); n++;      % final line, inclusive
+    pop_mark_1();              % return to first line
+    n -= what_line();
+    loop (n) {                 % indent line by line (ie slowly)
         X_USER_BLOCK0;
-        go_down_1 ();
+        go_down_1();
     }
+    go_up_1();
+
 }
-% local_setkey ("indent_region", "\e^\\");      % Emacs: C-M-\
-% local_setkey ("indent_region", "^XR\t");      % better for European keyboards
+% local_setkey("indent_region", "\e^\\");      % Emacs: C-M-\
+% local_setkey("indent_region", "^XR\t");      % better for European keyboards
+
+
+%!%+
+%\function{indent_tab}
+%\synopsis{Void indent_tab(Void)}
+%\description
+% indent each non-blank line in the region by tab=4 chars
+%#v+
+% Possible key binding
+%   local_setkey("indent_tab", "^X\t");
+%#v-
+%!%-
+define indent_tab() % <AUTOLOAD>
+{
+    variable n;
+    variable what = "    ";  % four spaces
+
+    USER_BLOCK0 { ifnot (eolp()) insert(what); } % only non-blank lines
+    ifnot (markp()) {
+        X_USER_BLOCK0;
+        return;
+    }
+
+    check_region(0);           % canonical region
+    n = what_line(); n++;      % final line, inclusive
+    () = dupmark();
+    pop_mark_1();              % jump to first line
+    n -= what_line();
+    loop (n) {                 % indent line by line (ie slowly)u
+        X_USER_BLOCK0;
+        go_down_1();
+    }
+    go_up_1();
+}
 
 %!%+
 %\function{back_to_indentation}
@@ -54,14 +91,14 @@ define indent_region () % <AUTOLOAD>
 % move point to the first non-whitespace character on this line
 %#v+
 % Emacs key binding:
-%   local_setkey ("back_to_indentation", "\em");        % Emacs: M-m
+%   local_setkey("back_to_indentation", "\em");        % Emacs: M-m
 %#v-
 %!%-
-define back_to_indentation ()   % <AUTOLOAD>
+define back_to_indentation()   % <AUTOLOAD>
 {
-    bol_skip_white ();
+    bol_skip_white();
 }
-% local_setkey ("back_to_indentation", "\em");  % Emacs: M-m
+% local_setkey("back_to_indentation", "\em");  % Emacs: M-m
 
 %!%+
 %\function{trim_backward}
@@ -69,9 +106,9 @@ define back_to_indentation ()   % <AUTOLOAD>
 %\description
 % like trim, but also trim if the previous char is whitespace
 %!%-
-define trim_backward () % <AUTOLOAD>
+define trim_backward() % <AUTOLOAD>
 {
-    bskip_white (); trim ();
+    bskip_white(); trim();
 }
 
 
@@ -81,11 +118,11 @@ define trim_backward () % <AUTOLOAD>
 %\description
 % align first non-blank character to a particular column
 %!%-
-define align_to ()      % <AUTOLOAD>
+define align_to()      % <AUTOLOAD>
 {
-    variable c = what_column ();
-    trim_backward ();
-    whitespace (c - what_column ());
+    variable c = what_column();
+    trim_backward();
+    whitespace (c - what_column());
 }
 
 %!%+
@@ -94,12 +131,12 @@ define align_to ()      % <AUTOLOAD>
 %\description
 % handle two different type of text alignment
 %!%-
-define align () % <AUTOLOAD>
+define align() % <AUTOLOAD>
 {
-    if (markp ()) indent_region (); else align_to ();
+    if (markp()) indent_region(); else align_to();
 }
-% local_setkey ("align", "\e^\\");      % C-M-\
-% local_setkey ("align", "^XR\t");      % better for European keyboards
+% local_setkey("align", "\e^\\");      % C-M-\
+% local_setkey("align", "^XR\t");      % better for European keyboards
 
 %!%+
 %\function{tab_to_tab_stop1}
@@ -109,17 +146,17 @@ define align () % <AUTOLOAD>
 % - respects the local value of TAB
 %#v+
 % Emacs key binding:
-%   local_setkey ("tab_to_tab_stop", "\ei");    % Emacs: M-i
+%   local_setkey("tab_to_tab_stop", "\ei");    % Emacs: M-i
 %#v-
 %\seealso{TAB}
 %!%-
-define tab_to_tab_stop1 ()      % <AUTOLOAD>
+define tab_to_tab_stop1()      % <AUTOLOAD>
 {
     if (TAB) {
-        variable c = what_column () + TAB;
-        trim_backward ();
+        variable c = what_column() + TAB;
+        trim_backward();
         c - ((c-1) mod TAB) - what_column();            % leave on stack
-        whitespace (());
+        whitespace(());
     }
 }
 
@@ -130,15 +167,15 @@ define tab_to_tab_stop1 ()      % <AUTOLOAD>
 %  move to the next defined tab stop
 %#v+
 % Emacs key binding:
-%   local_setkey ("move_to_tab", "\e\t");       % Emacs: ESC TAB
+%   local_setkey("move_to_tab", "\e\t");       % Emacs: ESC TAB
 %#v-
 %!%-
-define move_to_tab ()   % <AUTOLOAD>
+define move_to_tab()   % <AUTOLOAD>
 {
     if (TAB) {
-        variable c = what_column () + TAB;
+        variable c = what_column() + TAB;
         c - ((c-1) mod TAB);                            % leave on stack
-        goto_column (());
+        goto_column(());
     }
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%% end-of-file (SLang) %%%%%%%%%%%%%%%%%%%%%%%%%%
