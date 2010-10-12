@@ -1,4 +1,4 @@
-% AUTOMATICALLY GENERATED [2009-12-11 13:15:34] - DO NOT EDIT !!
+% AUTOMATICALLY GENERATED [2010-10-12 14:12:50] - DO NOT EDIT !!
 % CHANGES MADE HERE WILL BE LOST THE NEXT TIME 'slloader.pl' IS RUN !!
 %
 % _loader.sl: </data/app/share/jed/site>
@@ -46,5 +46,5 @@ _add_completion;
 % extensions for <foam> mode
 	add_mode_for_extension("foam", "C");
 	add_mode_for_extension("foam", "H");
-% ----------------------------------------------------------------------- END
+% --------------------------------------------------------------- end-of-file
 

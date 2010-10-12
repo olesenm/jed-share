@@ -78,7 +78,7 @@ set_syntax_flags( $1, 0x01 | 0x10 | 0x20 );
 %    whitespace(col - 2);
 % }
 
-define mpp_mode()      % <AUTO> <EXTS="MAC,MACRO">
+define mpp_mode()      % <AUTO> <EXTS="MAC,MACRO,STARCD">
 {
    variable mode = "mpp";
    set_mode(mode, 0);

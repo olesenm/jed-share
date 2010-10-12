@@ -1,4 +1,4 @@
-% AUTOMATICALLY GENERATED [2009-12-11 13:15:46] - DO NOT EDIT !!
+% AUTOMATICALLY GENERATED [2010-10-12 14:12:50] - DO NOT EDIT !!
 % CHANGES MADE HERE WILL BE LOST THE NEXT TIME 'slloader.pl' IS RUN !!
 %
 % _loader.sl: </data/app/share/jed/lib>
@@ -53,6 +53,7 @@ $0 = _stkdepth();       % save stack depth
 % <local>
 	"goto_column_cmd";	"local";
 	"goto_line_cmd";	"local";
+	"indent_rect";	"local";
 	"mark_word";	"local";
 	"string_rect";	"local";
 	"transpose_words";	"local";
@@ -74,5 +75,6 @@ _add_completion;
 % extensions for <mpp> mode
 	add_mode_for_extension("mpp", "MAC");
 	add_mode_for_extension("mpp", "MACRO");
-% ----------------------------------------------------------------------- END
+	add_mode_for_extension("mpp", "STARCD");
+% --------------------------------------------------------------- end-of-file
 

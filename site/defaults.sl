@@ -27,6 +27,7 @@ ifnot (BATCH) {
     setkey("transpose_words",  "\et");         % Emacs: M-t
     setkey("goto_line_cmd",    "\e#");         % M-#   % arbitrary
     setkey("string_rect",      "^XRi");        % rectangle related
+    setkey(".4 indent_rect",   "^XR4");        % rectangle related
 
     % $1 = getenv("LANG");
     % if (string_match($1, "^de", 1)) {        % german keyboard

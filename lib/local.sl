@@ -2,7 +2,7 @@
 % extra local functions, some of which aid in Emacs compliance.
 % Autoload upon demand.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% (c)1997-2002 Mark Olesen
+% (c)1997-2010 Mark Olesen
 %
 % Do as you wish with this code under the following conditions:
 % 1) leave this notice intact
@@ -80,9 +80,9 @@ define transpose_words()       % <AUTOLOAD>
 
 %!%+
 %\function{string_rect}
-%\synopsis{Void string_rect(Void)}
+%\synopsis{Void string_rect([String])}
 %\description
-% prefix each line with a string
+% prefix each line with a string provided as an argument or via prompt
 %#v+
 % Possible Emacs binding:
 % local_setkey("string_rect", "^XRi");
@@ -90,8 +90,7 @@ define transpose_words()       % <AUTOLOAD>
 %!%-
 define string_rect()   % <AUTOLOAD>
 {
-    variable col, str, n, nlines;
-    variable start;
+    variable col, n, nlines, begLine, str;
     check_region(0);
 
     % find the correct starting column
@@ -99,13 +98,17 @@ define string_rect()   % <AUTOLOAD>
     nlines = what_line();
     exchange_point_and_mark();
     n = what_column();
-    start = what_line();
+    begLine = what_line();
     if (n < col) col = n;
     nlines++;
-    nlines -= start;
+    nlines -= begLine;
 
-    % what string should be inserted?
-    str = read_mini("Rect String Insert:", "", "");
+    % insert provided string, or prompt for new one
+    if (_NARGS == 1)
+        str = ();
+    else
+        str = read_mini("Rect String Insert:", Null_String, Null_String);
+
     n = strlen(str);
     ifnot (n) return;
 
@@ -115,8 +118,24 @@ define string_rect()   % <AUTOLOAD>
         go_down_1();
     }
     % re-mark the region
-    goto_line(start);
+    goto_line(begLine);
     goto_column(col);
+}
+
+
+%!%+
+%\function{indent_rect}
+%\synopsis{Void indent_rect(Integer nSpaces)}
+%\description
+% prefix a line with n spaces
+%#v+
+% Example of possible Emacs binding:
+% local_setkey(".4 indent_rect", "^XR4");
+%#v-
+%!%-
+define indent_rect(nSpaces)   % <AUTOLOAD>
+{
+    string_rect(sprintf("%*s", nSpaces, Null_String));
 }
 
 
