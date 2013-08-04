@@ -10,8 +10,8 @@ Patch1: jed-etc.patch
 Obsoletes: jed-common jed-xjed
 Provides: jed-common jed-xjed
 Requires: slang-slsh
-# BuildRequires: slang-devel >= 2.0, autoconf, libselinux-devel
-BuildRequires: slang-devel >= 2.0, autoconf
+# BuildRequires: slang-devel >= 2.1, autoconf, libselinux-devel
+BuildRequires: slang-devel >= 2.1, autoconf
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 %description

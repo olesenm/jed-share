@@ -16,12 +16,12 @@
 %!%+
 %\function{keyword_extract}
 %\synopsis{keyword_extract}
-%\usage{String keyword_extract (void)}
+%\usage{String keyword_extract(void)}
 %\description
 % extract an alphanumeric keyword (including underscores)
 % from the current buffer
 %!%-
-define keyword_extract ()
+define keyword_extract()
 {
    variable chars = "0-9A-Z_a-z";
 
@@ -29,25 +29,25 @@ define keyword_extract ()
      {
         % skip leading non-word chars, including newline
         do {
-           skip_chars ("^" + chars);
-           ifnot (eolp ()) break;
-        } while (down (1));
-        bskip_chars (chars);    % in case we started in the middle of a word
-        push_mark (); skip_chars (chars);       % mark the word
+           skip_chars("^" + chars);
+           ifnot (eolp()) break;
+        } while (down(1));
+        bskip_chars(chars);    % in case we started in the middle of a word
+        push_mark(); skip_chars(chars);       % mark the word
      }
-   return bufsubstr ();
+   return bufsubstr();
 }
 
 % re-implementation of apropos() function from help.sl, split in two pieces
 % apropos() and help_for_apropos()
 
-%!% Void help_for_apropos (String)
+%!% Void help_for_apropos(String)
 %!% find Apropos context for a particular string
-define help_for_apropos (s)
+define help_for_apropos(s)
 {
    variable n, cbuf = whatbuf();
 
-   if (s == NULL) return; ifnot (strlen (s)) return;      % no funny strings
+   if (s == NULL) return; ifnot (strlen(s)) return;      % no funny strings
 
    n = _apropos(s, 0xF);
    pop2buf("*apropos*");
@@ -63,28 +63,28 @@ define help_for_apropos (s)
    pop2buf(cbuf);
 }
 
-%!% Void apropos (void)
+%!% Void apropos(void)
 %!% prompt for a string and find the Apropos context
-define apropos ()
+define apropos()
 {
    variable s;
    if (MINIBUFFER_ACTIVE) return;
 
-   s = read_mini ("apropos:", "", "");
-   help_for_apropos (s);
+   s = read_mini("apropos:", "", "");
+   help_for_apropos(s);
 }
 
-%!% Void slang_help (void)
+%!% Void slang_help(void)
 %!% extract an alphanumeric keyword and display S-Lang function/variable help
-define slang_help ()
+define slang_help()
 {
-   help_for_function (keyword_extract());
+   help_for_function(keyword_extract());
 }
 
-%!% Void slang_apropos (void)
+%!% Void slang_apropos(void)
 %!% extract an alphanumeric keyword and display S-Lang apropos context
-define slang_apropos ()
+define slang_apropos()
 {
-   help_for_apropos (keyword_extract());
+   help_for_apropos(keyword_extract());
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%% end-of-file (SLang) %%%%%%%%%%%%%%%%%%%%%%%%%%

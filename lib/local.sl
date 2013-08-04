@@ -2,7 +2,7 @@
 % extra local functions, some of which aid in Emacs compliance.
 % Autoload upon demand.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% (c)1997-2002 Mark Olesen
+% (c)1997-2010 Mark Olesen
 %
 % Do as you wish with this code under the following conditions:
 % 1) leave this notice intact
@@ -13,39 +13,39 @@
 
 %!%+
 %\function{mark_word}
-%\synopsis{Void mark_word (Void)}
+%\synopsis{Void mark_word(Void)}
 %\description
 % marks a woard according to the current definitons of a word character
 %#v+
-% Emacs binding: setkey ("mark_word",  "\e@");
+% Emacs binding: setkey("mark_word",  "\e@");
 %#v-
 %\seealso{skip_word, bskip_word}
 %!%-
-define mark_word ()     % <AUTOLOAD>
+define mark_word()     % <AUTOLOAD>
 {
     while (skip_non_word_chars(), eolp()) {
-        ifnot (right (1)) break;
+        ifnot (right(1)) break;
     }
-    
-    skip_word ();
-    ifnot (is_visible_mark ()) {
-        push_visible_mark ();
-        bskip_word ();
-        exchange_point_and_mark ();
+
+    skip_word();
+    ifnot (is_visible_mark()) {
+        push_visible_mark();
+        bskip_word();
+        exchange_point_and_mark();
     }
 }
 
 %!%+
 %\function{transpose_word}
-%\synopsis{Void transpose_word (Void)}
+%\synopsis{Void transpose_word(Void)}
 %\description
 % transpose word1 and word2, move point after word2
 %#v+
-% Emacs binding: setkey ("transpose_words",  "\et");
+% Emacs binding: setkey("transpose_words",  "\et");
 %#v-
 %\seealso{skip_word, bskip_word}
 %!%-
-define transpose_words ()       % <AUTOLOAD>
+define transpose_words()       % <AUTOLOAD>
 {
     push_mark();                % save original position
 
@@ -62,8 +62,8 @@ define transpose_words ()       % <AUTOLOAD>
     bskip_word_chars();
     variable word1 = bufsubstr();
 
-    variable n1 = strlen (word1);
-    variable n2 = strlen (word2);
+    variable n1 = strlen(word1);
+    variable n2 = strlen(word2);
     ifnot (n1 and n2) {
         pop_mark_1();           % restore original position
         return;
@@ -71,111 +71,130 @@ define transpose_words ()       % <AUTOLOAD>
 
     pop_mark_0();               % forget original position
 
-    deln (n1);
-    insert (word2);
+    deln(n1);
+    insert(word2);
     skip_non_word_chars();
-    deln (n2);
-    insert (word1);
+    deln(n2);
+    insert(word1);
 }
 
 %!%+
 %\function{string_rect}
-%\synopsis{Void string_rect (Void)}
+%\synopsis{Void string_rect([String])}
 %\description
-% prefix each line with a string
+% prefix each line with a string provided as an argument or via prompt
 %#v+
 % Possible Emacs binding:
-% local_setkey ("string_rect", "^XRi");
+% local_setkey("string_rect", "^XRi");
 %#v-
 %!%-
-define string_rect ()   % <AUTOLOAD>
+define string_rect()   % <AUTOLOAD>
 {
-    variable col, str, n, nlines;
-    variable start;
-    check_region (0);
+    variable col, n, nlines, begLine, str;
+    check_region(0);
 
     % find the correct starting column
-    col = what_column ();
-    nlines = what_line ();
-    exchange_point_and_mark ();
-    n = what_column ();
-    start = what_line ();
+    col = what_column();
+    nlines = what_line();
+    exchange_point_and_mark();
+    n = what_column();
+    begLine = what_line();
     if (n < col) col = n;
     nlines++;
-    nlines -= start;
-    
-    % what string should be inserted?
-    str = read_mini ("Rect String Insert:", "", "");
-    n = strlen (str);
+    nlines -= begLine;
+
+    % insert provided string, or prompt for new one
+    if (_NARGS == 1)
+        str = ();
+    else
+        str = read_mini("Rect String Insert:", Null_String, Null_String);
+
+    n = strlen(str);
     ifnot (n) return;
 
     loop (nlines) {
-        goto_column (col);
-        insert (str);
+        goto_column(col);
+        insert(str);
         go_down_1();
     }
     % re-mark the region
-    goto_line (start);
-    goto_column (col);
+    goto_line(begLine);
+    goto_column(col);
+}
+
+
+%!%+
+%\function{indent_rect}
+%\synopsis{Void indent_rect(Integer nSpaces)}
+%\description
+% prefix a line with n spaces
+%#v+
+% Example of possible Emacs binding:
+% local_setkey(".4 indent_rect", "^XR4");
+%#v-
+%!%-
+define indent_rect(nSpaces)   % <AUTOLOAD>
+{
+    string_rect(sprintf("%*s", nSpaces, Null_String));
 }
 
 
 %!%+
 %\function{unindent_line}
-%\synopsis{Void unindent_line (Void)}
+%\synopsis{Void unindent_line(Void)}
 %\description
 % Remove indentation from beginning of line (ie, trim the beg-of-line)
 %!%-
-define unindent_line ()         % <AUTOLOAD>
+define unindent_line()         % <AUTOLOAD>
 {
-    push_spot_bol (); trim (); pop_spot ();
+    push_spot_bol(); trim(); pop_spot();
 }
 
 % service function for 'goto_line_cmd' and 'goto_column_cmd'
-static define goto_cmd (prompt, moveto, get_position)
+static define goto_cmd(prompt, moveto, get_position)
 {
     variable target = read_mini(prompt, Null_String, Null_String);
     if (target[0] < '0') @get_position(); else 0;       % offset from
-    @moveto (integer (target) + ());
+    @moveto(integer(target) +());
 }
 
 
 %!%+
 %\function{goto_column_cmd}
-%\synopsis{Void goto_column_cmd (Void)}
+%\synopsis{Void goto_column_cmd(Void)}
 %\description
 % Goto to the specified column number (improved functionality).
-% If the first character of the line number is +/- (ie., <'0'), 
+% If the first character of the line number is +/- (ie., <'0'),
 % treat the value as relative to the current column.
 %#v+
 % Emacs binding:
-%    setkey ("goto_line_cmd", "\eg");
+%    setkey("goto_line_cmd", "\eg");
 % Possible Alternative binding:
-%    local_setkey ("goto_line_cmd", "\e#");
+%    local_setkey("goto_line_cmd", "\e#");
 %#v-
 %!%-
-define goto_column_cmd ()       % <AUTOLOAD>
+define goto_column_cmd()       % <AUTOLOAD>
 {
-    goto_cmd ("Goto column:", &goto_column, &what_column);
+    goto_cmd("Goto column:", &goto_column, &what_column);
 }
 
 %!%+
 %\function{goto_line_cmd}
-%\synopsis{Void goto_line_cmd (Void)}
+%\synopsis{Void goto_line_cmd(Void)}
 %\description
 % Goto to the specified line number (improved functionality).
-% If the first character of the line number is +/- (ie., <'0'), 
+% If the first character of the line number is +/- (ie., <'0'),
 % treat the value as relative to the current line.
 %#v+
 % Emacs binding:
-%    setkey ("goto_line_cmd", "\eg");
+%    setkey("goto_line_cmd", "\eg");
 % Possible Alternative binding:
-%    local_setkey ("goto_line_cmd", "\e#");
+%    local_setkey("goto_line_cmd", "\e#");
 %#v-
 %!%-
-define goto_line_cmd ()         % <AUTOLOAD>
+define goto_line_cmd()         % <AUTOLOAD>
 {
-    goto_cmd ("Goto line:", &goto_line, &what_line);
+    goto_cmd("Goto line:", &goto_line, &what_line);
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%% end-of-file (SLang) %%%%%%%%%%%%%%%%%%%%%%%%%%%

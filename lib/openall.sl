@@ -16,36 +16,36 @@
 %!% eg.,
 %!% grep [-l] "foo" *.[ch] | jed --openall
 %!% ls [-F] *.[ch] | jed -f openall
-define openall ()
+define openall()
 {
-   variable file, buf = whatbuf ();
+   variable file, buf = whatbuf();
 
-   if (buf[0] != '*') error ("Must start from a '*' buffer");
-   bol ();
-   if (markp ())
+   if (buf[0] != '*') error("Must start from a '*' buffer");
+   bol();
+   if (markp())
      {
-        narrow ();
-        bob ();
-        EXIT_BLOCK { widen (); }
+        narrow();
+        bob();
+        EXIT_BLOCK { widen(); }
      }
    do
      {
-        skip_white ();
-        if (what_char () > 45)          % skip lines starting with
+        skip_white();
+        if (what_char() > 45)           % skip lines starting with
           {                             % these chars: !"#$%&'()*+,-
-             push_mark ();              % beginning of filename
+             push_mark();               % beginning of filename
 #ifdef MSDOS OS2
-             go_right (2);              % in case of "c:/filename"
+             go_right(2);               % in case of "c:/filename"
 #endif
-             skip_chars ("^\t *:@");    % ':' (grep -l) or '*', '@' (ls -F)
-             file = bufsubstr ();
-             if (file_status (file) == 1) % file exists and is not a directory
+             skip_chars("^\t *:@");     % ':' (grep -l) or '*', '@' (ls -F)
+             file = bufsubstr();
+             if (file_status(file) == 1) % file exists and is not a directory
                {
-                  () = read_file (file);
-                  setbuf (buf);
+                  () = read_file(file);
+                  setbuf(buf);
                }
           }
      }
-   while (down_1 ());
+   while (down_1());
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%% end-of-file (SLang) %%%%%%%%%%%%%%%%%%%%%%%%%%

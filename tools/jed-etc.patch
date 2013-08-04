@@ -1,0 +1,17 @@
+--- jed-0.99-19/lib/site.sl.orig	2010-02-19 08:23:37.550683000 +0100
++++ jed-0.99-19/lib/site.sl	2010-02-19 08:24:46.242924000 +0100
+@@ -3309,14 +3309,8 @@
+      $1 = getenv ("JED_CONF_DIR");
+      if ($1 == NULL)
+        {
+-	  $1 = guess_jed_install_prefix ();
+-	  if ($1 != NULL)
+-	    {
+-	       $1 = path_concat ($1, "etc");
+-	       if (($1 == "/usr/etc") and (0 == file_status ($1)))
+ 		 $1 = "/etc";
+ 	    }
+-       }
+      if ($1 != NULL)
+        {
+ 	  $1 = path_concat ($1, "jed.conf");

@@ -12,7 +12,7 @@
 % attempts to be a uniform fashion so that individual users are unburdened.
 %
 % It should be loaded by adding the following the line
-%       () = evalfile ("terminal.sl");
+%       () = evalfile("terminal.sl");
 % to the file defaults.sl which is automatically loaded from site.sl
 %
 % NB:
@@ -20,33 +20,33 @@
 % thus we use string_match()
 
 %{{{ general preferences
-() = evalfile ("wmark");        % MS-Windows Shift-marking + cut/paste
+() = evalfile("wmark");        % MS-Windows Shift-marking + cut/paste
 
 % make ESC Backspace == ESC DEL
-if (is_defined ("yp_yank_pop")) {
+if (is_defined("yp_yank_pop")) {
     local_setkey("yp_bkill_word", "\e^H");
 }
 else {
     local_setkey("bdelete_word", "\e^H");
 }
-local_setkey ("move_to_tab", "\e\t");   % Emacs: ESC TAB
+local_setkey("move_to_tab", "\e\t");   % Emacs: ESC TAB
 %}}}
 #ifdef MSDOS OS2
 %{{{ Dos OS/2
-% set_color_scheme (Null_String);
+% set_color_scheme(Null_String);
 IGNORE_BEEP = 4;        % flash status line (djgpp version only)
 LINENUMBERS = 2;        % lines/columns
 DISPLAY_EIGHT_BIT = 1;
 HORIZONTAL_PAN  = -1;   % pan window
 
 # ifdef MSWINDOWS
-() = evalfile ("iso-latin");
+() = evalfile("iso-latin");
 # endif
 % conveniences for the various keyboards / languages
 
-if ($1 = getenv ("NWLANGUAGE"), $1 != NULL) {
-    $1 = strup ($1);
-    if (string_match ($1, "^DE", 1)) {
+if ($1 = getenv("NWLANGUAGE"), $1 != NULL) {
+    $1 = strup($1);
+    if (string_match($1, "^DE", 1)) {
         local_setkey("dabbrev", "\e-"); % can't reach "\e/"
     }
 }
@@ -59,14 +59,14 @@ LINENUMBERS = 1;        % display linenumber only
 DISPLAY_EIGHT_BIT = 160;% assume ISO Latin 1
 
 #ifdef XWINDOWS
-putenv ("TERM=xterm");
+putenv("TERM=xterm");
 #endif
 if ($1 = getenv("TERM"), $1 == NULL) $1 = Null_String;
 
 #ifdef XWINDOWS
 %{{{ XWINDOWS - remap to xterm (rxvt) escape sequences
-% set_color_scheme (Null_String);
-% putenv ("TERMINFO=/usr/local/lib/terminfo");
+% set_color_scheme(Null_String);
+% putenv("TERMINFO=/usr/local/lib/terminfo");
 %
 TERM_BLINK_MODE = 1;
 LINENUMBERS = 2;                % display line & column numbers
@@ -82,27 +82,27 @@ x_set_keysym(0xFFFF, '^',       "\e[3^");       % C-Delete
 %}}}
 #else   % XWINDOWS
 %{{{ TERM_BLINK_MODE
-if ($2 = getenv ("COLORTERM"), $2 == NULL) $2 = Null_String;
-if (string_match ($2, "^rxvt", 1)  or string_match ($1, "^rxvt", 1) or
-    string_match ($2, "^xterm", 1) or string_match ($1, "^xterm.color", 1) )
+if ($2 = getenv("COLORTERM"), $2 == NULL) $2 = Null_String;
+if (string_match($2, "^rxvt", 1)  or string_match($1, "^rxvt", 1) or
+    string_match($2, "^xterm", 1) or string_match($1, "^xterm.color", 1) )
 {
     TERM_BLINK_MODE = 1;
-    % define simple_menu ()
+    % define simple_menu()
     % {
-    %    if (strlen (expand_jedlib_file ("jedmenu.sl"))) () = evalfile ("jedmenu");
+    %    if (strlen(expand_jedlib_file("jedmenu.sl"))) () = evalfile("jedmenu");
     % }
 }
 %}}}
 #endif  % XWINDOWS
 %{{{ xterm* rxvt*
-if (string_match ($1, "^kvt", 1)  or
-    string_match ($1, "^rxvt", 1) or
-    string_match ($1, "^xterm", 1)) {
+if (string_match($1, "^kvt", 1)  or
+    string_match($1, "^rxvt", 1) or
+    string_match($1, "^xterm", 1)) {
 #ifndef XWINDOWS
-    % map_input (127, 4);               % map: ^? -> ^D
-    set_term_vtxxx (0);
+    % map_input(127, 4);               % map: ^? -> ^D
+    set_term_vtxxx(0);
     % xterm mouse support - only load once
-    ifnot (BATCH) ifnot (is_defined ("Mouse_Button")) () = evalfile ("mousex");
+    ifnot (BATCH) ifnot (is_defined("Mouse_Button")) () = evalfile("mousex");
 
     % we mostly have a poor terminfo for xterm Key_Home / Key_End
     local_setkey("bol",         "\e[1~");
@@ -161,7 +161,7 @@ local_setkey("skip_word",       Key_Ctrl_Right);
 local_setkey("bskip_word",      Key_Ctrl_Left);
 % local_setkey("\".nil\"flush", Key_Ctrl_Home);
 %
-if (is_defined ("yp_yank_pop")) {
+if (is_defined("yp_yank_pop")) {
     local_setkey("yp_kill_line",        Key_Ctrl_End);  % C-End
 }
 else {

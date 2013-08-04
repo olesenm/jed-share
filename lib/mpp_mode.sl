@@ -35,50 +35,50 @@ set_syntax_flags( $1, 0x01 | 0x10 | 0x20 );
 () = define_keywords_n($1, "clearfluidlocal", 5, 1);
 () = define_keywords_n($1, "deleteinvert", 6, 1);
 
-% static define mpp_indent_preprocess_line ()
+% static define mpp_indent_preprocess_line()
 % {
 %    variable col;
-% 
-%    push_spot_bol ();
-%    
-%    trim ();
-%    ifnot (up_1 ())
+%
+%    push_spot_bol();
+%
+%    trim();
+%    ifnot (up_1())
 %      {
-%       pop_spot ();
+%       pop_spot();
 %       return;
 %      }
-%    
-%    ifnot (bol_bsearch_char ('#'))
+%
+%    ifnot (bol_bsearch_char('#'))
 %      {
-%       pop_spot ();
+%       pop_spot();
 %       return;
 %      }
-%    go_right_1 ();
-%    skip_white ();
-%    col = what_column ();
-%    if (looking_at ("if"))
+%    go_right_1();
+%    skip_white();
+%    col = what_column();
+%    if (looking_at("if"))
 %      col += C_Preprocess_Indent;
-%    else if (looking_at ("el"))
+%    else if (looking_at("el"))
 %      col += C_Preprocess_Indent;
-%    
-%    pop_spot ();
-%    go_right_1 ();
-%    skip_white ();
-%    
-%    ifnot (looking_at ("error"))
+%
+%    pop_spot();
+%    go_right_1();
+%    skip_white();
+%
+%    ifnot (looking_at("error"))
 %      {
-%       if (looking_at_char ('e'))
+%       if (looking_at_char('e'))
 %         col -= C_Preprocess_Indent;
 %      }
-% 
-%    if (what_column () == col)
+%
+%    if (what_column() == col)
 %      return;
-%    bskip_white ();
-%    trim ();
-%    whitespace (col - 2);
+%    bskip_white();
+%    trim();
+%    whitespace(col - 2);
 % }
- 
-define mpp_mode ()      % <AUTO> <EXTS="MAC,MACRO">
+
+define mpp_mode()      % <AUTO> <EXTS="MAC,MACRO,STARCD">
 {
    variable mode = "mpp";
    set_mode(mode, 0);
@@ -86,3 +86,4 @@ define mpp_mode ()      % <AUTO> <EXTS="MAC,MACRO">
    mode_set_mode_info(mode, "fold_info", "//{{{\r//}}}\r\r");
    run_mode_hooks("mpp_mode_hook");
 }
+%%%%%%%%%%%%%%%%%%%%%%%%%%% end-of-file (SLang) %%%%%%%%%%%%%%%%%%%%%%%%%%
