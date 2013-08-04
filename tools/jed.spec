@@ -1,7 +1,7 @@
 Summary: Fast, compact editor based on the S-Lang screen library
 Name: jed
-Version: 0.99.19
-Release: 219
+Version: 0.99.20
+Release: 71
 License: GPL
 Group: Applications/Editors
 Source0: ftp://space.mit.edu/pub/davis/jed/v0.99/jed-%{version}.tar.gz
@@ -9,6 +9,7 @@ URL: http://www.jedsoft.org/jed/
 Patch1: jed-etc.patch
 Obsoletes: jed-common jed-xjed
 Provides: jed-common jed-xjed
+Requires: slang-slsh
 # BuildRequires: slang-devel >= 2.0, autoconf, libselinux-devel
 BuildRequires: slang-devel >= 2.0, autoconf
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
