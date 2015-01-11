@@ -136,8 +136,8 @@ define dired_hook ()
 {
    % local_unsetkey ("^K");
    % local_setkey ("dired_kill_line", "^K");
-   local_setkey (".1 dired_point", "\t");
-   local_setkey ("dired_find", "\r");
+   local_setkey(". 1 dired_point", "\t");
+   local_setkey("dired_find", "\r");
 }
 %define dired_mode_hook ()      {}
 %define text_mode_hook ()       {}
@@ -277,8 +277,8 @@ _autoload ("c_box", "cbox",
            "c_un_comment", "cbox",
            "c_eof", "cbox",
            3);
-setkey (".'-'c_box",    "^C-");
-setkey ("c_un_comment", "\e:");
+setkey(". '-'c_box",    "^C-");
+setkey("c_un_comment", "\e:");
 
 _autoload ("indent_region",     "align",
            "back_to_indentation","align",

@@ -133,8 +133,8 @@ if (string_match($1, "^kvt", 1)  or
     local_setkey("page_down",           "\eOs");        % KP_3 (Next)
     local_setkey("previous_char_cmd",   "\eOt");        % KP_4 (Left)
     local_setkey("next_char_cmd",       "\eOv");        % KP_6 (Right)
-    local_setkey(".0 recenter", "\eOu");        % KP_5 (center)
-    local_setkey("bol",         "\eOw");        % KP_7 (Home)
+    local_setkey(". 0 recenter", "\eOu");               % KP_5 (center)
+    local_setkey("bol",         "\eOw");                % KP_7 (Home)
     local_setkey("previous_line_cmd",   "\eOx");        % KP_8 (Up)
     local_setkey("page_up",             "\eOy");        % KP_9 (Prior)
     %
@@ -174,7 +174,7 @@ local_setkey("backward_paragraph",      Key_Ctrl_Up);
 local_setkey("forward_paragraph",       Key_Ctrl_Down);
 local_setkey("skip_word",       Key_Ctrl_Right);
 local_setkey("bskip_word",      Key_Ctrl_Left);
-% local_setkey("\".nil\"flush", Key_Ctrl_Home);
+% local_setkey("\". nil\"flush", Key_Ctrl_Home);
 %
 if (is_defined("yp_yank_pop")) {
     local_setkey("yp_kill_line",        Key_Ctrl_End);  % C-End

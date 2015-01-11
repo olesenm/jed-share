@@ -1,6 +1,6 @@
 % hpcalc.sl             -*- SLang -*-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% (c)1995-2006 Mark Olesen
+% (c)1995-2015 Mark Olesen
 %
 % Do as you wish with this code under the following conditions:
 % 1) leave this notice intact
@@ -8,7 +8,7 @@
 % 3) don't try to pretend it is your own code
 % 4) it's nice when improvements make their way back to the community
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% HP-style RPN calculator (v0.98)
+% HP-style RPN calculator (v0.99)
 %    by Mark Olesen <firstname dot lastname at gmx dot net>
 % for the Jed editor by John E. Davis
 %
@@ -555,7 +555,7 @@ define HPexit() %{{{
     if (bufferName == whatbuf()) {
         set_buffer_modified_flag(0);
         delbuf(bufferName);
-        eval(".(\"hpcalc.sl\"expand_jedlib_file evalfile pop)hpcalc");
+        eval(". (\"hpcalc.sl\"expand_jedlib_file evalfile pop)hpcalc");
         % try to pop down the old calculator window
         if (2 == nwindows()) {
             call("other_window");
@@ -568,40 +568,40 @@ define HPexit() %{{{
 %{{{ Keymap, Syntax highlighting
 $1 = "hpcalc";
 ifnot (keymap_p($1)) make_keymap($1);
-definekey("HPenter",           "\r",   $1);
-definekey("HPrecenter",        "\f",   $1);
-definekey(".\"?\"HPcmd",       "?",    $1);
+definekey("HPenter",          "\r",     $1);
+definekey("HPrecenter",       "\f",     $1);
+definekey(". \"?\"HPcmd",     "?",      $1);
 #ifdef SLANG_DOUBLE_TYPE
-definekey(".\"PI\"HPins",      "\eP",  $1);
-definekey(".\"cos\"HPins",     "\ec",  $1);
-definekey(".\"sin\"HPins",     "\es",  $1);
-definekey(".\"tan\"HPins",     "\et",  $1);
-definekey(".\"acos\"HPins",    "\eC",  $1);
-definekey(".\"asin\"HPins",    "\eS",  $1);
-definekey(".\"atan\"HPins",    "\eT",  $1);
-definekey(".\"acos\"HPins",    "\eAc", $1);
-definekey(".\"asin\"HPins",    "\eAs", $1);
-definekey(".\"atan\"HPins",    "\eAt", $1);
-definekey(".\"exp\"HPins",     "\ee",  $1);
-definekey(".\"log\"HPins",     "\el",  $1);
-definekey(".\"alog\"HPins",    "\eL",  $1);
-definekey(".\"alog\"HPins",    "\eAl", $1);
-definekey(".\"ln\"HPins",      "\en",  $1);
-definekey(".\"sqrt\"HPins",    "\eq",  $1);
-definekey(".\"inv\"HPins",     "\e/",  $1);
+definekey(". \"PI\"HPins",    "\eP",    $1);
+definekey(". \"cos\"HPins",   "\ec",    $1);
+definekey(". \"sin\"HPins",   "\es",    $1);
+definekey(". \"tan\"HPins",   "\et",    $1);
+definekey(". \"acos\"HPins",  "\eC",    $1);
+definekey(". \"asin\"HPins",  "\eS",    $1);
+definekey(". \"atan\"HPins",  "\eT",    $1);
+definekey(". \"acos\"HPins",  "\eAc",   $1);
+definekey(". \"asin\"HPins",  "\eAs",   $1);
+definekey(". \"atan\"HPins",  "\eAt",   $1);
+definekey(". \"exp\"HPins",   "\ee",    $1);
+definekey(". \"log\"HPins",   "\el",    $1);
+definekey(". \"alog\"HPins",  "\eL",    $1);
+definekey(". \"alog\"HPins",  "\eAl",   $1);
+definekey(". \"ln\"HPins",    "\en",    $1);
+definekey(". \"sqrt\"HPins",  "\eq",    $1);
+definekey(". \"inv\"HPins",   "\e/",    $1);
 #endif
-definekey(".\"abs\"HPins",     "\e|",  $1);
-definekey(".\"chs\"HPins",     "\e-",  $1);
+definekey(". \"abs\"HPins",   "\e|",    $1);
+definekey(". \"chs\"HPins",   "\e-",    $1);
 
-definekey(".\"last\"HPins",    "\e\r", $1);
-definekey(".\"sq\"HPins",      "^Q",   $1);
-definekey(".\"roll\"HPcmd",    "^V",   $1);
-definekey(".\"prec\"HPcmd",    "\e#",  $1);
-definekey(".\"deg\"HPcmd",     "\e^D", $1);
-definekey(".\"rad\"HPcmd",     "\e^R", $1);
-definekey(".\"fix\"HPcmd",     "\e^F", $1);
-definekey(".\"sci\"HPcmd",     "\e^S", $1);
-definekey("HPexit",            "^XK",  $1);
+definekey(". \"last\"HPins",  "\e\r",   $1);
+definekey(". \"sq\"HPins",    "^Q",     $1);
+definekey(". \"roll\"HPcmd",  "^V",     $1);
+definekey(". \"prec\"HPcmd",  "\e#",    $1);
+definekey(". \"deg\"HPcmd",   "\e^D",   $1);
+definekey(". \"rad\"HPcmd",   "\e^R",   $1);
+definekey(". \"fix\"HPcmd",   "\e^F",   $1);
+definekey(". \"sci\"HPcmd",   "\e^S",   $1);
+definekey("HPexit",           "^XK",    $1);
 
 $1 = "hpcalc";
 % Now create and initialize the syntax tables.
@@ -626,7 +626,7 @@ hpcalc();
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %{{{ help text - do not delete
 #<helpText>
-[ HP-style RPN calculator (v0.98) (deg rad fix sci char oct dec hex)
+[ HP-style RPN calculator (v0.99) (deg rad fix sci char oct dec hex)
 
               M-/: inv   M-e: exp   M-q: sqrt          M-s: sin   M-as: asin
   M-L: last   M-|: abs   M-n: ln    C-Q: sq   (x^2)    M-c: cos   M-ac: acos

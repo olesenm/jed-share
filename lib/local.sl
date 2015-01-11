@@ -130,7 +130,7 @@ define string_rect()   % <AUTOLOAD>
 % prefix a line with n spaces
 %#v+
 % Example of possible Emacs binding:
-% local_setkey(".4 indent_rect", "^XR4");
+% local_setkey(". 4 indent_rect", "^XR4");
 %#v-
 %!%-
 define indent_rect(nSpaces)   % <AUTOLOAD>

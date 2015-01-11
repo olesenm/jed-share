@@ -15,24 +15,24 @@ if (strlen(expand_jedlib_file("loader.sl"))) () = evalfile("loader.sl");
 ifnot (BATCH) {
     () = evalfile("emacs");
     % don't like incremental search
-    setkey("search_backward",  "^R");
-    setkey("search_forward",   "^S");
-    setkey("trim_buffer",      "^X^O");        % Emacs: delete-blank-lines
+    setkey("search_backward", "^R");
+    setkey("search_forward",  "^S");
+    setkey("trim_buffer",     "^X^O");      % Emacs: delete-blank-lines
 
-    setkey("re_search_backward","\e^R");       % Emacs: C-M-r
+    setkey("re_search_backward","\e^R");    % Emacs: C-M-r
     setkey("re_search_forward",        "\e^S");        % Emacs: C-M-s
-    % setkey("sys_spawn_cmd",  "^X^Z");        % Emacs: suspend-emacs
+    % setkey("sys_spawn_cmd",  "^X^Z");       % Emacs: suspend-emacs
 
-    setkey("mark_word",                "\e@");         % Emacs: mark-word
-    setkey("transpose_words",  "\et");         % Emacs: M-t
-    setkey("goto_line_cmd",    "\e#");         % M-#   % arbitrary
-    setkey("string_rect",      "^XRi");        % rectangle related
-    setkey(".4 indent_rect",   "^XR4");        % rectangle related
+    setkey("mark_word",       "\e@");       % Emacs: mark-word
+    setkey("transpose_words", "\et");       % Emacs: M-t
+    setkey("goto_line_cmd",   "\e#");       % M-#   % arbitrary
+    setkey("string_rect",     "^XRi");      % rectangle related
+    setkey(". 4 indent_rect", "^XR4");      % rectangle related
 
     % $1 = getenv("LANG");
-    % if (string_match($1, "^de", 1)) {        % german keyboard
-    setkey("self_insert_cmd",  "`");   % instead of quoted_insert
-    setkey("dabbrev",          "\e-"); % instead of ESC-/
+    % if (string_match($1, "^de", 1)) {       % german keyboard
+    setkey("self_insert_cmd", "`");     % instead of quoted_insert
+    setkey("dabbrev",         "\e-");   % instead of ESC-/
     % }
 
 #ifdef MSWINDOWS
