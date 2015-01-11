@@ -1,6 +1,6 @@
 % terminal.sl           -*- SLang -*-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% (c)1997-2002 Mark Olesen
+% (c)1997-2015 Mark Olesen
 %
 % Do as you wish with this code under the following conditions:
 % 1) leave this notice intact
@@ -70,15 +70,30 @@ if ($1 = getenv("TERM"), $1 == NULL) $1 = Null_String;
 %
 TERM_BLINK_MODE = 1;
 LINENUMBERS = 2;                % display line & column numbers
+
+% x_set_keysym(0xFF08, '$',   "^D");      % S-Backspace
+% x_set_keysym(0xFF08, '^',   "^D");      % C-Backspace
+x_set_keysym(0xFF09, '$',   "\e[Z");    % S-Tab
+x_set_keysym(0xFF09, '^',   "^Q^I");    % C-Tab -> quoted tab
 %
-% x_set_keysym(0xFF08, '$',     "^D");          % S-Backspace
-% x_set_keysym(0xFF08, '^',     "^D");          % C-Backspace
-x_set_keysym(0xFF09, '$',       "\e[Z");        % S-Tab
-x_set_keysym(0xFF09, '^',       "^Q^I");        % C-Tab -> quoted tab
-%
-x_set_keysym(0xFFFF,  0,        "\e[3~");       % Delete
-x_set_keysym(0xFFFF, '$',       "\e[3$");       % S-Delete
-x_set_keysym(0xFFFF, '^',       "\e[3^");       % C-Delete
+x_set_keysym(0xFFFF,  0,    "\e[3~");   % Delete
+x_set_keysym(0xFFFF, '$',   "\e[3$");   % S-Delete
+x_set_keysym(0xFFFF, '^',   "\e[3^");   % C-Delete
+% retain keypad numerical behaviour
+x_set_keysym(0xFF8D, 0,     "\r");       % XK_KP_Enter
+x_set_keysym(0xFFAC, 0,     ".");        % XK_KP_Separator (have '.' for programming)
+x_set_keysym(0xFFAD, 0,     "-");        % XK_KP_Subtract
+x_set_keysym(0xFFB0, 0,     "0");        % XK_KP_0
+x_set_keysym(0xFFB1, 0,     "1");        % XK_KP_1
+x_set_keysym(0xFFB2, 0,     "2");        % XK_KP_2
+x_set_keysym(0xFFB3, 0,     "3");        % XK_KP_3
+x_set_keysym(0xFFB4, 0,     "4");        % XK_KP_4
+x_set_keysym(0xFFB5, 0,     "5");        % XK_KP_5
+x_set_keysym(0xFFB6, 0,     "6");        % XK_KP_6
+x_set_keysym(0xFFB7, 0,     "7");        % XK_KP_7
+x_set_keysym(0xFFB8, 0,     "8");        % XK_KP_8
+x_set_keysym(0xFFB9, 0,     "9");        % XK_KP_9
+
 %}}}
 #else   % XWINDOWS
 %{{{ TERM_BLINK_MODE
