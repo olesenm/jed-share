@@ -2,7 +2,7 @@
 % align.sl
 % misc. routines for indenting, aligning, etc.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% (c)1997-2002,2009 Mark Olesen
+% Copyright 1997-2019 Mark Olesen
 %
 % Do as you wish with this code under the following conditions:
 % 1) leave this notice intact
@@ -178,4 +178,25 @@ define move_to_tab()   % <AUTOLOAD>
         goto_column(());
     }
 }
+
+
+%!%+
+%\function{untab_buffer}
+%\synopsis{Void untab_buffer(Void)}
+%\description
+%  untab a marked region, or the entire buffer
+%!%-
+define untab_buffer() % <AUTOLOAD>
+{
+    if (markp()) {
+        untab();
+    }
+    else {
+        push_spot();
+        mark_buffer();
+        untab();
+        pop_spot();
+    }
+}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%% end-of-file (SLang) %%%%%%%%%%%%%%%%%%%%%%%%%%

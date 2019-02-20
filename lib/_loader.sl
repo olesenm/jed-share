@@ -1,7 +1,7 @@
-% AUTOMATICALLY GENERATED [2010-10-12 14:12:50] - DO NOT EDIT !!
+% AUTOMATICALLY GENERATED [2019-02-20 10:36:23] - DO NOT EDIT !!
 % CHANGES MADE HERE WILL BE LOST THE NEXT TIME 'slloader.pl' IS RUN !!
 %
-% _loader.sl: </data/app/share/jed/lib>
+% _loader.sl: </home/mol/share/jed/lib>
 % ---------------------------------------------------------------------------
 % this file is called by 'loader.sl' and defines autoloads/completions
 % for SLang files in this directory
@@ -36,6 +36,7 @@ $0 = _stkdepth();       % save stack depth
 	"move_to_tab";	"align";
 	"tab_to_tab_stop1";	"align";
 	"trim_backward";	"align";
+	"untab_buffer";	"align";
 % <charset>
 	"charset";	"charset";
 % <cmisc1>

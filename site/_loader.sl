@@ -1,7 +1,7 @@
-% AUTOMATICALLY GENERATED [2010-10-12 14:12:50] - DO NOT EDIT !!
+% AUTOMATICALLY GENERATED [2019-02-20 10:36:23] - DO NOT EDIT !!
 % CHANGES MADE HERE WILL BE LOST THE NEXT TIME 'slloader.pl' IS RUN !!
 %
-% _loader.sl: </data/app/share/jed/site>
+% _loader.sl: </home/mol/share/jed/site>
 % ---------------------------------------------------------------------------
 % this file is called by 'loader.sl' and defines autoloads/completions
 % for SLang files in this directory
@@ -29,6 +29,8 @@
 $0 = _stkdepth();       % save stack depth
 % <defaults>
 	"vi_percent";	"defaults";
+% <foam_comments>
+	"foam_comments";	"foam_comments";
 % <foam_mode>
 	"foam_mode";	"foam_mode";
 (_stkdepth() - $0)/2;   % leave count on stack
@@ -37,6 +39,8 @@ _autoload;
 % list of function names for completion
 %
 $0 = _stkdepth();       % save stack depth
+% <foam_comments>
+	"foam_comments";
 % <foam_mode>
 	"foam_mode";
 (_stkdepth() - $0);     % leave count on stack

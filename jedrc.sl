@@ -180,7 +180,8 @@ define slang_mode_hook ()
 }
 %}}}
 %-------------------------------------------------------------------------
-% additional functions
+% Additional functions
+
 %{{{ folding
 autoload ("fold_get_marks",     "folding");
 define insert_fold_beg ()
@@ -285,7 +286,8 @@ _autoload ("indent_region",     "align",
            "move_to_tab",       "align",
            "tab_to_tab_stop1",  "align",
            "just_one_space",    "align",
-           5);
+           "untab_buffer",      "align",
+           6);
 
 setkey ("indent_region",        "\e^\\");       % C-M-\
 setkey ("back_to_indentation",  "\em");         % M-m
