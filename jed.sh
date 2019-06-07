@@ -30,7 +30,6 @@ then
         /data/local/opt/jed /data/local/opt/slang/jed \
         /data/local/usr/jed /data/local/usr/slang/jed \
         /data/local/usr/local/jed /data/local/usr/local/slang/jed \
-        /data/calc/eva/usr/local/jed /data/calc/eva/usr/local/slang/jed \
         $HOME/usr/jed $HOME/usr/slang/jed \
         $HOME/usr/local/jed $HOME/usr/local/slang/jed \
         ;
