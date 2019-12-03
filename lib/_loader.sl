@@ -1,4 +1,4 @@
-% AUTOMATICALLY GENERATED [2019-02-20 10:36:23] - DO NOT EDIT !!
+% AUTOMATICALLY GENERATED [2019-12-03 18:48:47] - DO NOT EDIT !!
 % CHANGES MADE HERE WILL BE LOST THE NEXT TIME 'slloader.pl' IS RUN !!
 %
 % _loader.sl: </home/mol/share/jed/lib>
@@ -59,6 +59,8 @@ $0 = _stkdepth();       % save stack depth
 	"string_rect";	"local";
 	"transpose_words";	"local";
 	"unindent_line";	"local";
+% <m4_mode>
+	"m4_mode";	"m4_mode";
 % <mpp_mode>
 	"mpp_mode";	"mpp_mode";
 (_stkdepth() - $0)/2;   % leave count on stack
@@ -73,6 +75,8 @@ $0 = _stkdepth();       % save stack depth
 _add_completion;
 % ---------------------------------------------------------------------------
 	() = evalfile("helphelp");
+% extensions for <m4> mode
+	add_mode_for_extension("m4", "m4");
 % extensions for <mpp> mode
 	add_mode_for_extension("mpp", "MAC");
 	add_mode_for_extension("mpp", "MACRO");
