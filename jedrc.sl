@@ -31,28 +31,6 @@ set_color_scheme (getenv ("JED_COLORS"));
 #endif
 #endif  % XWINDOWS
 %}}}
-%{{{ mail settings
-#ifn$USER olesen
-variable Mail_Reply_To = "<olesen@me.QueensU.CA>";
-#endif
-
-$0 = _stkdepth ();
-$1 = "me.queensu.ca,olesen";
-variable Rmail_Dont_Reply_To =
-strncat ("olesen@conn.", $1, "@weber.", $1, _stkdepth () - $0);
-
-define mail_hook ()             % define a convenient mail hook
-{
-   local_setkey ("mail_send", "^C^C");  % send and exit buffer
-   local_setkey ("mailalias_expand", "^C^E");
-   % set_buffer_modified_flag (0);
-}
-
-%define rmail_hook ()   {}
-%define rmail_folder_hook ()    {}
-setkey ("rmail",        "^X^M");
-
-%}}}
 %{{{ man page
 .(unix_man)man          % quick and easy way to get man-pages
 .()clean_manpage        % forward reference

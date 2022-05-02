@@ -14,5 +14,4 @@ NULL;
 "local.sl";
 "mail_mode.sl";
 "openall.sl";
-"url.sl";
 %%%%%%%%%%%%%%%%%%%%%%%%%%% end-of-file (SLang) %%%%%%%%%%%%%%%%%%%%%%%%%%

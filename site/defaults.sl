@@ -35,11 +35,8 @@ ifnot (BATCH) {
     setkey("dabbrev",         "\e-");   % instead of ESC-/
     % }
 
-#ifdef MSWINDOWS
-    set_status_line("(WJed %v) Emacs: %b    (%m%a%n%o)  %p,%c   %t", 1);
-#elifdef XWINDOWS
-    set_status_line("(XJed %v) Emacs: %b    (%m%a%n%o)  %p,%c   %t", 1);
-#endif
+    set_status_line("(Jed %v) Emacs: %b    (%m%a%n%o)  %p,%c   %t", 1);
+
     autoload("bufed", "bufed");
     setkey("bufed", "^X^B");
 }

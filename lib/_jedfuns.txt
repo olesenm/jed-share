@@ -316,19 +316,3 @@ goto_line_cmd
        local_setkey ("goto_line_cmd", "\e#");
 
 --------------------------------------------------------------
-
-openURL
-
- SYNOPSIS
-   Void openURL(Void)
-
- DESCRIPTION
-   find an `http://' or `ftp://' address and pass it to a web
-   browser 
-   
-   Note: not available on all systems
-
- SEE ALSO
-   getbuf_info, setbuf_info
---------------------------------------------------------------
-
